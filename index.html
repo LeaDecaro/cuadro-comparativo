@@ -42,29 +42,48 @@
 
         <div class="datos-expediente">
 
+            <!-- FILA 1 -->
+
             <div class="dato">
                 <label>FECHA:</label>
-                <input type="date" id="fecha">
+
+                <input
+                    type="date"
+                    id="fecha"
+                    onchange="actualizarFechaVisual()">
+
+                <span
+                    id="fechaImpresion"
+                    class="fecha-impresion">
+                </span>
             </div>
+
 
             <div class="dato">
                 <label>EXPEDIENTE:</label>
+
                 <input
                     type="text"
                     id="expediente"
                     placeholder="EX-2026-XXXXXXXX-NEU-LYT#MJDC">
             </div>
 
+
+            <!-- FILA 2 -->
+
             <div class="dato">
                 <label>REF:</label>
+
                 <input
                     type="text"
                     id="referencia"
                     placeholder="PS Nº XXXXX - DESCRIPCIÓN">
             </div>
 
+
             <div class="dato">
                 <label>DESTINO:</label>
+
                 <input
                     type="text"
                     id="destino"
@@ -79,13 +98,19 @@
     <!-- BOTONES -->
     <div class="barra-herramientas no-print">
 
-        <button class="btn btn-agregar" onclick="agregarRenglon()">
+        <button
+            class="btn btn-agregar"
+            onclick="agregarRenglon()">
             ＋ Agregar renglón
         </button>
 
-        <button class="btn btn-agregar" onclick="agregarProveedor()">
+
+        <button
+            class="btn btn-agregar"
+            onclick="agregarProveedor()">
             ＋ Agregar proveedor
         </button>
+
 
         <button
             id="btnDescripcion"
@@ -94,14 +119,26 @@
             ＋ Agregar descripción
         </button>
 
-        <button class="btn btn-imprimir" onclick="imprimirDocumento()">
+
+        <button
+            class="btn btn-imprimir"
+            onclick="imprimirDocumento()">
             🖨 Imprimir
         </button>
 
-        <button class="btn btn-pdf" onclick="descargarPDF()">
+
+        <button
+            class="btn btn-pdf"
+            onclick="descargarPDF()">
             📄 Descargar PDF
         </button>
 
+    </div>
+
+
+    <!-- TITULO TABLA PRINCIPAL -->
+    <div class="tabla-principal-titulo">
+        CUADRO COMPARATIVO DE PROVEEDORES
     </div>
 
 
@@ -141,11 +178,13 @@
         <table class="tabla-resultados">
 
             <thead>
+
                 <tr>
                     <th>RENGLÓN</th>
                     <th>PROVEEDOR CONVENIENTE</th>
                     <th>PRECIO CONVENIENTE</th>
                 </tr>
+
             </thead>
 
             <tbody id="resultadosRenglones">
