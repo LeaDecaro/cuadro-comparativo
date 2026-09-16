@@ -1,943 +1,566 @@
 /* =====================================================
-   CUADRO COMPARATIVO DE OFERTAS
+   CONFIGURACIÓN GENERAL
 ===================================================== */
 
+* {
+    box-sizing: border-box;
+}
 
-/* =====================================================
-   DATOS INICIALES
-===================================================== */
-
-let proveedores = [
-    {
-        id: 1,
-        nombre: "Proveedor 1"
-    },
-    {
-        id: 2,
-        nombre: "Proveedor 2"
-    }
-];
-
-let renglones = [
-    {
-        id: 1,
-        descripcion: "",
-        cantidad: 1,
-        precios: {}
-    }
-];
-
-let siguienteProveedorId = 3;
-let siguienteRenglonId = 2;
-
-
-/* =====================================================
-   INICIO
-===================================================== */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const fecha = document.getElementById("fecha");
-
-    if (fecha) {
-        const hoy = new Date();
-
-        const año = hoy.getFullYear();
-        const mes = String(hoy.getMonth() + 1).padStart(2, "0");
-        const dia = String(hoy.getDate()).padStart(2, "0");
-
-        fecha.value = `${año}-${mes}-${dia}`;
-    }
-
-    renderizarTabla();
-});
-
-
-/* =====================================================
-   RENDERIZAR TABLA
-===================================================== */
-
-function renderizarTabla() {
-
-    renderizarCabecera();
-    renderizarRenglones();
-    calcularResultados();
+body {
+    margin: 0;
+    padding: 0;
+    background: #e9ecef;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #111;
 }
 
 
 /* =====================================================
-   CABECERA
+   DOCUMENTO
 ===================================================== */
 
-function renderizarCabecera() {
-
-    const filaProveedores = document.getElementById("filaProveedores");
-    const filaSubcolumnas = document.getElementById("filaSubcolumnas");
-
-    filaProveedores.innerHTML = `
-        <th rowspan="2" class="col-reng">
-            RENG.
-        </th>
-
-        <th rowspan="2" class="col-descripcion">
-            DESCRIPCIÓN
-        </th>
-
-        <th rowspan="2" class="col-cantidad">
-            CANT.
-        </th>
-    `;
-
-
-    filaSubcolumnas.innerHTML = "";
-
-
-    proveedores.forEach((proveedor, indice) => {
-
-        const esUltimo = indice === proveedores.length - 1;
-
-        const th = document.createElement("th");
-
-        th.colSpan = 2;
-        th.className = "proveedor-header";
-
-        th.innerHTML = `
-            <div style="display:flex;align-items:center;justify-content:center;gap:6px;">
-
-                <input
-                    type="text"
-                    class="proveedor-nombre"
-                    value="${escaparHTML(proveedor.nombre)}"
-                    onchange="cambiarNombreProveedor(${proveedor.id}, this.value)"
-                >
-
-                ${
-                    esUltimo
-                    ? `
-                    <button
-                        class="btn-mas no-print"
-                        title="Agregar proveedor"
-                        onclick="agregarProveedor()">
-                        +
-                    </button>
-                    `
-                    : ""
-                }
-
-                ${
-                    proveedores.length > 2
-                    ? `
-                    <button
-                        class="btn-eliminar no-print"
-                        title="Eliminar proveedor"
-                        onclick="eliminarProveedor(${proveedor.id})">
-                        ×
-                    </button>
-                    `
-                    : ""
-                }
-
-            </div>
-        `;
-
-        filaProveedores.appendChild(th);
-
-
-        const subUnitario = document.createElement("th");
-        subUnitario.className = "subheader";
-        subUnitario.textContent = "UNITARIO";
-
-        const subTotal = document.createElement("th");
-        subTotal.className = "subheader";
-        subTotal.textContent = "TOTAL";
-
-        filaSubcolumnas.appendChild(subUnitario);
-        filaSubcolumnas.appendChild(subTotal);
-    });
-
-
-    filaProveedores.insertAdjacentHTML(
-        "beforeend",
-        `
-        <th rowspan="2" class="col-ganador">
-            PROVEEDOR<br>CONVENIENTE
-        </th>
-
-        <th rowspan="2" class="col-total-conveniente">
-            TOTAL<br>CONVENIENTE
-        </th>
-
-        <th rowspan="2" class="col-acciones no-print">
-            +
-        </th>
-        `
-    );
+#documento {
+    width: 100%;
+    max-width: 1600px;
+    margin: 25px auto;
+    background: white;
+    padding-bottom: 35px;
 }
 
 
 /* =====================================================
-   RENGLONES
+   ENCABEZADO
 ===================================================== */
 
-function renderizarRenglones() {
+.encabezado {
+    height: 125px;
+    background: #293f4c;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 70px;
+}
 
-    const cuerpo = document.getElementById("cuerpoTabla");
+.logos {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    cuerpo.innerHTML = "";
+.logo-ministerio {
+    font-size: 17px;
+    line-height: 1.2;
+}
 
+.logo-neuquen {
+    text-align: center;
+    font-size: 13px;
+    line-height: 1;
+}
 
-    renglones.forEach((renglon, indice) => {
-
-        const tr = document.createElement("tr");
-
-        let html = "";
-
-
-        /* RENG */
-        html += `
-            <td>
-                <strong>${indice + 1}</strong>
-            </td>
-        `;
-
-
-        /* DESCRIPCIÓN */
-        html += `
-            <td>
-                <input
-                    type="text"
-                    class="campo descripcion-input"
-                    value="${escaparHTML(renglon.descripcion)}"
-                    placeholder="Descripción del bien o servicio"
-                    onchange="cambiarDescripcion(${renglon.id}, this.value)"
-                >
-            </td>
-        `;
-
-
-        /* CANTIDAD */
-        html += `
-            <td>
-                <input
-                    type="number"
-                    min="0"
-                    step="any"
-                    class="campo cantidad-input"
-                    value="${renglon.cantidad}"
-                    onchange="cambiarCantidad(${renglon.id}, this.value)"
-                >
-            </td>
-        `;
-
-
-        /* PRECIOS DE PROVEEDORES */
-        proveedores.forEach(proveedor => {
-
-            const precio =
-                renglon.precios[proveedor.id] !== undefined
-                ? renglon.precios[proveedor.id]
-                : "";
-
-
-            const total =
-                precio !== ""
-                ? Number(precio) * Number(renglon.cantidad || 0)
-                : "";
-
-
-            html += `
-                <td
-                    id="unitario-${renglon.id}-${proveedor.id}"
-                >
-
-                    <input
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        class="campo precio-input"
-                        value="${precio}"
-                        placeholder="$"
-                        onchange="cambiarPrecio(${renglon.id}, ${proveedor.id}, this.value)"
-                    >
-
-                </td>
-            `;
-
-
-            html += `
-                <td
-                    id="total-${renglon.id}-${proveedor.id}"
-                >
-                    ${
-                        total !== ""
-                        ? formatearMoneda(total)
-                        : ""
-                    }
-                </td>
-            `;
-        });
-
-
-        /* GANADOR */
-        html += `
-            <td
-                id="ganador-${renglon.id}"
-                class="ganador-texto"
-            >
-                —
-            </td>
-        `;
-
-
-        /* TOTAL CONVENIENTE */
-        html += `
-            <td
-                id="conveniente-${renglon.id}"
-                class="ganador-texto"
-            >
-                —
-            </td>
-        `;
-
-
-        /* ACCIONES */
-        html += `
-            <td class="no-print">
-
-                <div style="display:flex;gap:4px;justify-content:center;">
-
-                    <button
-                        class="btn-mas"
-                        title="Agregar renglón"
-                        onclick="agregarRenglon()">
-                        +
-                    </button>
-
-                    ${
-                        renglones.length > 1
-                        ? `
-                        <button
-                            class="btn-eliminar"
-                            title="Eliminar renglón"
-                            onclick="eliminarRenglon(${renglon.id})">
-                            ×
-                        </button>
-                        `
-                        : ""
-                    }
-
-                </div>
-
-            </td>
-        `;
-
-
-        tr.innerHTML = html;
-
-        cuerpo.appendChild(tr);
-    });
+.logo-neuquen strong {
+    font-size: 34px;
+    letter-spacing: -2px;
 }
 
 
 /* =====================================================
-   AGREGAR PROVEEDOR
+   TITULO
 ===================================================== */
 
-function agregarProveedor() {
+.titulo-seccion {
+    padding: 30px 45px 20px;
+}
 
-    proveedores.push({
-        id: siguienteProveedorId,
-        nombre: `Proveedor ${siguienteProveedorId}`
-    });
-
-    siguienteProveedorId++;
-
-    renderizarTabla();
+.titulo-seccion h1 {
+    margin: 0 0 28px;
+    font-size: 29px;
+    text-decoration: underline;
+    font-weight: 800;
 }
 
 
 /* =====================================================
-   ELIMINAR PROVEEDOR
+   DATOS
 ===================================================== */
 
-function eliminarProveedor(id) {
+.datos-expediente {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1.5fr 1.5fr;
+    gap: 12px;
+}
 
-    if (proveedores.length <= 2) {
-        alert("Debe existir al menos dos proveedores.");
-        return;
+.dato {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dato label {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.dato input {
+    border: none;
+    border-bottom: 1px solid #222;
+    padding: 6px 3px;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+}
+
+.dato input:focus {
+    background: #f2f6f8;
+}
+
+
+/* =====================================================
+   DESCRIPCIÓN GENERAL
+===================================================== */
+
+.descripcion-general {
+    margin-top: 18px;
+}
+
+.descripcion-general.oculto {
+    display: none;
+}
+
+.btn-descripcion {
+    background: #1d6fa5;
+    color: white;
+}
+
+.descripcion-general label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.descripcion-general textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 70px;
+    padding: 8px;
+    border: 1px solid #888;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    outline: none;
+}
+
+.descripcion-general textarea:focus {
+    border-color: #1d6fa5;
+    background: #f8fbfd;
+}
+
+
+/* =====================================================
+   BARRA DE HERRAMIENTAS
+===================================================== */
+
+.barra-herramientas {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px 45px 20px;
+}
+
+.btn {
+    border: none;
+    border-radius: 6px;
+    padding: 11px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+.btn-agregar {
+    background: #1d6fa5;
+    color: white;
+}
+
+.btn-imprimir {
+    background: #374151;
+    color: white;
+}
+
+.btn-pdf {
+    background: #b91c1c;
+    color: white;
+}
+
+
+/* =====================================================
+   TABLA
+===================================================== */
+
+.tabla-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0 25px;
+}
+
+table {
+    border-collapse: collapse;
+    width: max-content;
+    min-width: 100%;
+    font-size: 13px;
+}
+
+th,
+td {
+    border: 1px solid #111;
+    padding: 6px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+/* CABECERAS */
+
+thead th {
+    background: #f4f4f4;
+    font-weight: bold;
+}
+
+.proveedor-header {
+    min-width: 185px;
+    position: relative;
+    background: #f4f4f4;
+}
+
+.proveedor-nombre {
+    width: 125px;
+    border: none;
+    background: transparent;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    outline: none;
+}
+
+.proveedor-nombre:focus {
+    background: white;
+    border: 1px solid #777;
+}
+
+.subheader {
+    min-width: 92px;
+    font-size: 12px;
+}
+
+
+/* COLUMNAS FIJAS */
+
+.col-reng {
+    width: 60px;
+    min-width: 60px;
+}
+
+.col-descripcion {
+    width: 260px;
+    min-width: 260px;
+}
+
+.col-cantidad {
+    width: 80px;
+    min-width: 80px;
+}
+
+.col-ganador {
+    width: 180px;
+    min-width: 180px;
+}
+
+.col-total-conveniente {
+    width: 135px;
+    min-width: 135px;
+}
+
+.col-acciones {
+    width: 45px;
+    min-width: 45px;
+}
+
+
+/* =====================================================
+   CAMPOS DE LA TABLA
+===================================================== */
+
+.campo {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+}
+
+.campo:focus {
+    background: #fff8dc;
+}
+
+.descripcion-input {
+    text-align: left;
+}
+
+.cantidad-input,
+.precio-input {
+    text-align: right;
+}
+
+
+/* =====================================================
+   BOTON +
+===================================================== */
+
+.btn-mas {
+    border: 1px solid #1d6fa5;
+    background: white;
+    color: #1d6fa5;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+    line-height: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-mas:hover {
+    background: #1d6fa5;
+    color: white;
+}
+
+
+/* =====================================================
+   BOTON ELIMINAR
+===================================================== */
+
+.btn-eliminar {
+    border: none;
+    background: transparent;
+    color: #b91c1c;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-eliminar:hover {
+    transform: scale(1.2);
+}
+
+
+/* =====================================================
+   CELDA GANADORA
+===================================================== */
+
+.ganador-celda {
+    background: #8eb4dc !important;
+    font-weight: bold;
+}
+
+.ganador-nombre {
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   RESULTADOS
+===================================================== */
+
+.ganador-texto {
+    font-weight: bold;
+}
+
+.sin-precio {
+    color: #888;
+    font-style: italic;
+}
+
+
+/* =====================================================
+   TOTALES
+===================================================== */
+
+.total-general {
+    background: #f2f2f2;
+    font-weight: bold;
+}
+
+.total-proveedor {
+    font-weight: bold;
+    background: #f2f2f2;
+}
+
+
+/* =====================================================
+   RESUMEN
+===================================================== */
+
+.resumen {
+    margin: 25px 45px;
+    border: 1px solid #111;
+}
+
+.resumen-titulo {
+    background: #293f4c;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.resultado-general {
+    padding: 16px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+/* =====================================================
+   PIE
+===================================================== */
+
+.pie-documento {
+    margin: 25px 45px 0;
+    border-top: 1px solid #333;
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #444;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    #documento {
+        margin: 0;
     }
 
-    const proveedor = proveedores.find(p => p.id === id);
-
-    if (!confirm(`¿Eliminar ${proveedor.nombre}?`)) {
-        return;
+    .encabezado {
+        height: 100px;
+        padding: 0 25px;
     }
 
-    proveedores = proveedores.filter(p => p.id !== id);
-
-    renglones.forEach(renglon => {
-        delete renglon.precios[id];
-    });
-
-    renderizarTabla();
-}
-
-
-/* =====================================================
-   CAMBIAR NOMBRE PROVEEDOR
-===================================================== */
-
-function cambiarNombreProveedor(id, nombre) {
-
-    const proveedor = proveedores.find(p => p.id === id);
-
-    if (proveedor) {
-
-        proveedor.nombre =
-            nombre.trim() !== ""
-            ? nombre.trim()
-            : `Proveedor ${id}`;
+    .logo-ministerio {
+        font-size: 13px;
     }
 
-    calcularResultados();
-}
-
-
-/* =====================================================
-   AGREGAR RENGLÓN
-===================================================== */
-
-function agregarRenglon() {
-
-    const nuevo = {
-        id: siguienteRenglonId,
-        descripcion: "",
-        cantidad: 1,
-        precios: {}
-    };
-
-    siguienteRenglonId++;
-
-    renglones.push(nuevo);
-
-    renderizarTabla();
-
-
-    /* Llevar el usuario hacia el nuevo renglón */
-    setTimeout(() => {
-
-        const filas =
-            document.querySelectorAll("#cuerpoTabla tr");
-
-        if (filas.length > 0) {
-
-            filas[filas.length - 1].scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
-        }
-
-    }, 100);
-}
-
-
-/* =====================================================
-   ELIMINAR RENGLÓN
-===================================================== */
-
-function eliminarRenglon(id) {
-
-    if (renglones.length <= 1) {
-        alert("Debe existir al menos un renglón.");
-        return;
+    .logo-neuquen strong {
+        font-size: 27px;
     }
 
-    renglones =
-        renglones.filter(renglon => renglon.id !== id);
-
-    renderizarTabla();
-}
-
-
-/* =====================================================
-   CAMBIAR DESCRIPCIÓN
-===================================================== */
-
-function cambiarDescripcion(id, valor) {
-
-    const renglon =
-        renglones.find(r => r.id === id);
-
-    if (renglon) {
-        renglon.descripcion = valor;
-    }
-}
-
-
-/* =====================================================
-   CAMBIAR CANTIDAD
-===================================================== */
-
-function cambiarCantidad(id, valor) {
-
-    const renglon =
-        renglones.find(r => r.id === id);
-
-    if (!renglon) {
-        return;
+    .titulo-seccion {
+        padding: 25px 20px 15px;
     }
 
-    renglon.cantidad = Number(valor) || 0;
-
-    renderizarTabla();
-}
-
-
-/* =====================================================
-   CAMBIAR PRECIO
-===================================================== */
-
-function cambiarPrecio(renglonId, proveedorId, valor) {
-
-    const renglon =
-        renglones.find(r => r.id === renglonId);
-
-    if (!renglon) {
-        return;
+    .titulo-seccion h1 {
+        font-size: 23px;
     }
 
-    if (valor === "") {
-
-        delete renglon.precios[proveedorId];
-
-    } else {
-
-        renglon.precios[proveedorId] =
-            Number(valor);
+    .datos-expediente {
+        grid-template-columns: 1fr;
     }
 
-    renderizarTabla();
-}
-
-
-/* =====================================================
-   CALCULAR RESULTADOS
-===================================================== */
-
-function calcularResultados() {
-
-    let totalesProveedores = {};
-
-    proveedores.forEach(proveedor => {
-        totalesProveedores[proveedor.id] = 0;
-    });
-
-
-    renglones.forEach(renglon => {
-
-        /* Limpiar celdas ganadoras */
-
-        proveedores.forEach(proveedor => {
-
-            const unitario =
-                document.getElementById(
-                    `unitario-${renglon.id}-${proveedor.id}`
-                );
-
-            const total =
-                document.getElementById(
-                    `total-${renglon.id}-${proveedor.id}`
-                );
-
-            if (unitario) {
-                unitario.classList.remove("ganador-celda");
-            }
-
-            if (total) {
-                total.classList.remove("ganador-celda");
-            }
-        });
-
-
-        /* Buscar menor */
-
-        let ofertas = [];
-
-
-        proveedores.forEach(proveedor => {
-
-            const precio =
-                renglon.precios[proveedor.id];
-
-
-            if (
-                precio !== undefined &&
-                precio !== "" &&
-                Number(precio) >= 0
-            ) {
-
-                const total =
-                    Number(precio) *
-                    Number(renglon.cantidad || 0);
-
-
-                ofertas.push({
-                    proveedor: proveedor,
-                    unitario: Number(precio),
-                    total: total
-                });
-
-
-                totalesProveedores[proveedor.id] += total;
-            }
-
-        });
-
-
-        const ganadorElemento =
-            document.getElementById(
-                `ganador-${renglon.id}`
-            );
-
-        const convenienteElemento =
-            document.getElementById(
-                `conveniente-${renglon.id}`
-            );
-
-
-        if (ofertas.length === 0) {
-
-            if (ganadorElemento) {
-                ganadorElemento.textContent = "—";
-            }
-
-            if (convenienteElemento) {
-                convenienteElemento.textContent = "—";
-            }
-
-            return;
-        }
-
-
-        /* Menor precio */
-
-        const menor =
-            Math.min(
-                ...ofertas.map(oferta => oferta.total)
-            );
-
-
-        /* Puede haber empate */
-
-        const ganadores =
-            ofertas.filter(
-                oferta => oferta.total === menor
-            );
-
-
-        if (ganadores.length === 1) {
-
-            const ganador =
-                ganadores[0];
-
-
-            /* Pintar UNITARIO */
-            const unitario =
-                document.getElementById(
-                    `unitario-${renglon.id}-${ganador.proveedor.id}`
-                );
-
-
-            /* Pintar TOTAL */
-            const total =
-                document.getElementById(
-                    `total-${renglon.id}-${ganador.proveedor.id}`
-                );
-
-
-            if (unitario) {
-                unitario.classList.add("ganador-celda");
-            }
-
-            if (total) {
-                total.classList.add("ganador-celda");
-            }
-
-
-            if (ganadorElemento) {
-
-                ganadorElemento.textContent =
-                    ganador.proveedor.nombre;
-            }
-
-
-            if (convenienteElemento) {
-
-                convenienteElemento.textContent =
-                    formatearMoneda(ganador.total);
-            }
-
-        } else {
-
-            /* EMPATE */
-
-            ganadores.forEach(ganador => {
-
-                const unitario =
-                    document.getElementById(
-                        `unitario-${renglon.id}-${ganador.proveedor.id}`
-                    );
-
-                const total =
-                    document.getElementById(
-                        `total-${renglon.id}-${ganador.proveedor.id}`
-                    );
-
-                if (unitario) {
-                    unitario.classList.add("ganador-celda");
-                }
-
-                if (total) {
-                    total.classList.add("ganador-celda");
-                }
-
-            });
-
-
-            if (ganadorElemento) {
-
-                ganadorElemento.textContent =
-                    "EMPATE";
-            }
-
-
-            if (convenienteElemento) {
-
-                convenienteElemento.textContent =
-                    formatearMoneda(menor);
-            }
-        }
-
-    });
-
-
-    renderizarTotales(totalesProveedores);
-    calcularPropuestaConveniente(totalesProveedores);
-}
-
-
-/* =====================================================
-   TOTALES POR PROVEEDOR
-===================================================== */
-
-function renderizarTotales(totalesProveedores) {
-
-    const pie =
-        document.getElementById("pieTabla");
-
-    pie.innerHTML = "";
-
-
-    const tr = document.createElement("tr");
-
-
-    tr.innerHTML = `
-        <td colspan="3" class="total-general">
-            TOTAL
-        </td>
-    `;
-
-
-    proveedores.forEach(proveedor => {
-
-        const total =
-            totalesProveedores[proveedor.id] || 0;
-
-
-        tr.innerHTML += `
-            <td class="total-proveedor">
-                TOTAL
-            </td>
-
-            <td class="total-proveedor">
-                ${formatearMoneda(total)}
-            </td>
-        `;
-    });
-
-
-    tr.innerHTML += `
-        <td class="total-general">
-            PROPUESTA
-        </td>
-
-        <td class="total-general">
-            —
-        </td>
-
-        <td class="no-print"></td>
-    `;
-
-
-    pie.appendChild(tr);
-}
-
-
-/* =====================================================
-   PROPUESTA CONVENIENTE GENERAL
-===================================================== */
-
-function calcularPropuestaConveniente(totalesProveedores) {
-
-    const resultado =
-        document.getElementById("resultadoGeneral");
-
-
-    if (!resultado) {
-        return;
+    .barra-herramientas {
+        padding: 10px 20px 20px;
     }
 
-
-    let proveedoresConTotal =
-        proveedores
-            .map(proveedor => ({
-                proveedor: proveedor,
-                total:
-                    totalesProveedores[proveedor.id] || 0
-            }))
-            .filter(item => item.total > 0);
-
-
-    if (proveedoresConTotal.length === 0) {
-
-        resultado.textContent =
-            "Complete los precios para obtener el resultado.";
-
-        return;
+    .tabla-wrapper {
+        padding: 0 10px;
     }
 
+    .resumen {
+        margin: 20px;
+    }
 
-    const menor =
-        Math.min(
-            ...proveedoresConTotal.map(item => item.total)
-        );
-
-
-    const ganadores =
-        proveedoresConTotal.filter(
-            item => item.total === menor
-        );
-
-
-    if (ganadores.length === 1) {
-
-        resultado.innerHTML = `
-            <strong>${escaparHTML(ganadores[0].proveedor.nombre)}</strong>
-            —
-            ${formatearMoneda(ganadores[0].total)}
-        `;
-
-    } else {
-
-        resultado.innerHTML = `
-            EMPATE —
-            ${ganadores
-                .map(item =>
-                    escaparHTML(item.proveedor.nombre)
-                )
-                .join(" / ")}
-            —
-            ${formatearMoneda(menor)}
-        `;
+    .pie-documento {
+        margin: 20px;
     }
 }
 
 
 /* =====================================================
-   FORMATEAR MONEDA
+   IMPRESIÓN
 ===================================================== */
 
-function formatearMoneda(numero) {
+@media print {
 
-    return new Intl.NumberFormat("es-AR", {
-        style: "currency",
-        currency: "ARS",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }).format(numero || 0);
-}
+    @page {
+        size: landscape;
+        margin: 8mm;
+    }
 
+    body {
+        background: white;
+    }
 
-/* =====================================================
-   ESCAPAR HTML
-===================================================== */
+    #documento {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
 
-function escaparHTML(texto) {
+    .no-print {
+        display: none !important;
+    }
 
-    return String(texto)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
+    .dato input {
+        border: none;
+        padding: 0;
+    }
 
+    .dato input::placeholder {
+        color: transparent;
+    }
 
-/* =====================================================
-   IMPRIMIR
-===================================================== */
+    .campo {
+        border: none;
+    }
 
-function imprimirDocumento() {
+    .proveedor-nombre {
+        border: none;
+    }
 
-    window.print();
-}
+    table {
+        font-size: 10px;
+    }
 
+    th,
+    td {
+        padding: 4px;
+    }
 
-/* =====================================================
-   DESCARGAR PDF
-===================================================== */
+    .resumen {
+        margin: 15px 0;
+    }
 
-function descargarPDF() {
+    .pie-documento {
+        margin: 15px 0 0;
+    }
 
-    const elemento =
-        document.getElementById("documento");
+    .descripcion-general {
+        margin-top: 10px;
+    }
 
-
-    const opciones = {
-
-        margin: 5,
-
-        filename:
-            "Cuadro_Comparativo_de_Ofertas.pdf",
-
-        image: {
-            type: "jpeg",
-            quality: 0.98
-        },
-
-        html2canvas: {
-            scale: 2,
-            useCORS: true
-        },
-
-        jsPDF: {
-            unit: "mm",
-            format: "a4",
-            orientation: "landscape"
-        },
-
-        pagebreak: {
-            mode: [
-                "avoid-all",
-                "css",
-                "legacy"
-            ]
-        }
-    };
-
-
-    html2pdf()
-        .set(opciones)
-        .from(elemento)
-        .save();
+    .descripcion-general textarea {
+        border: none;
+        resize: none;
+        padding: 0;
+    }
 }
