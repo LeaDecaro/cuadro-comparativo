@@ -32,6 +32,13 @@ let siguienteRenglonId = 2;
 
 
 /* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
+let mostrarDescripcion = false;
+
+
+/* =====================================================
    INICIO
 ===================================================== */
 
@@ -40,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const fecha = document.getElementById("fecha");
 
     if (fecha) {
+
         const hoy = new Date();
 
         const año = hoy.getFullYear();
@@ -54,52 +62,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =====================================================
-   DESCRIPCIÓN GENERAL
-===================================================== */
-
-function alternarDescripcion() {
-
-    const contenedor =
-        document.getElementById("contenedorDescripcion");
-
-    const boton =
-        document.getElementById("btnDescripcion");
-
-    if (!contenedor || !boton) {
-        return;
-    }
-
-
-    const estaOculto =
-        contenedor.classList.contains("oculto");
-
-
-    if (estaOculto) {
-
-        contenedor.classList.remove("oculto");
-
-        boton.textContent =
-            "− Ocultar descripción";
-
-    } else {
-
-        contenedor.classList.add("oculto");
-
-        boton.textContent =
-            "＋ Agregar descripción";
-    }
-}
-
-
-/* =====================================================
-   RENDERIZAR TABLA
+   RENDERIZAR TABLA COMPLETA
 ===================================================== */
 
 function renderizarTabla() {
 
     renderizarCabecera();
+
     renderizarRenglones();
+
     calcularResultados();
+}
+
+
+/* =====================================================
+   MOSTRAR / OCULTAR DESCRIPCIÓN
+===================================================== */
+
+function alternarDescripcion() {
+
+    mostrarDescripcion = !mostrarDescripcion;
+
+    const boton =
+        document.getElementById("btnDescripcion");
+
+    if (boton) {
+
+        if (mostrarDescripcion) {
+
+            boton.textContent = "− Ocultar descripción";
+
+        } else {
+
+            boton.textContent = "＋ Agregar descripción";
+        }
+    }
+
+    renderizarTabla();
 }
 
 
@@ -109,38 +108,73 @@ function renderizarTabla() {
 
 function renderizarCabecera() {
 
-    const filaProveedores = document.getElementById("filaProveedores");
-    const filaSubcolumnas = document.getElementById("filaSubcolumnas");
+    const filaProveedores =
+        document.getElementById("filaProveedores");
 
-    filaProveedores.innerHTML = `
-        <th rowspan="2" class="col-reng">
-            RENG.
-        </th>
+    const filaSubcolumnas =
+        document.getElementById("filaSubcolumnas");
 
-        <th rowspan="2" class="col-descripcion">
-            DESCRIPCIÓN
-        </th>
 
-        <th rowspan="2" class="col-cantidad">
-            CANT.
-        </th>
-    `;
-
+    filaProveedores.innerHTML = "";
 
     filaSubcolumnas.innerHTML = "";
 
 
+    /* RENG */
+
+    filaProveedores.insertAdjacentHTML(
+        "beforeend",
+        `
+        <th rowspan="2" class="col-reng">
+            RENG.
+        </th>
+        `
+    );
+
+
+    /* DESCRIPCIÓN */
+
+    if (mostrarDescripcion) {
+
+        filaProveedores.insertAdjacentHTML(
+            "beforeend",
+            `
+            <th rowspan="2" class="col-descripcion">
+                DESCRIPCIÓN
+            </th>
+            `
+        );
+    }
+
+
+    /* CANTIDAD */
+
+    filaProveedores.insertAdjacentHTML(
+        "beforeend",
+        `
+        <th rowspan="2" class="col-cantidad">
+            CANT.
+        </th>
+        `
+    );
+
+
+    /* PROVEEDORES */
+
     proveedores.forEach((proveedor, indice) => {
 
-        const esUltimo = indice === proveedores.length - 1;
+        const esUltimo =
+            indice === proveedores.length - 1;
 
-        const th = document.createElement("th");
+        const th =
+            document.createElement("th");
 
         th.colSpan = 2;
+
         th.className = "proveedor-header";
 
         th.innerHTML = `
-            <div style="display:flex;align-items:center;justify-content:center;gap:6px;">
+            <div class="proveedor-header-contenido">
 
                 <input
                     type="text"
@@ -181,35 +215,31 @@ function renderizarCabecera() {
         filaProveedores.appendChild(th);
 
 
-        const subUnitario = document.createElement("th");
+        /* UNITARIO */
+
+        const subUnitario =
+            document.createElement("th");
+
         subUnitario.className = "subheader";
+
         subUnitario.textContent = "UNITARIO";
 
-        const subTotal = document.createElement("th");
+        filaSubcolumnas.appendChild(subUnitario);
+
+
+        /* TOTAL */
+
+        const subTotal =
+            document.createElement("th");
+
         subTotal.className = "subheader";
+
         subTotal.textContent = "TOTAL";
 
-        filaSubcolumnas.appendChild(subUnitario);
         filaSubcolumnas.appendChild(subTotal);
+
     });
 
-
-    filaProveedores.insertAdjacentHTML(
-        "beforeend",
-        `
-        <th rowspan="2" class="col-ganador">
-            PROVEEDOR<br>CONVENIENTE
-        </th>
-
-        <th rowspan="2" class="col-total-conveniente">
-            TOTAL<br>CONVENIENTE
-        </th>
-
-        <th rowspan="2" class="col-acciones no-print">
-            +
-        </th>
-        `
-    );
 }
 
 
@@ -219,43 +249,54 @@ function renderizarCabecera() {
 
 function renderizarRenglones() {
 
-    const cuerpo = document.getElementById("cuerpoTabla");
+    const cuerpo =
+        document.getElementById("cuerpoTabla");
 
     cuerpo.innerHTML = "";
 
 
     renglones.forEach((renglon, indice) => {
 
-        const tr = document.createElement("tr");
+        const tr =
+            document.createElement("tr");
 
         let html = "";
 
 
         /* RENG */
+
         html += `
-            <td>
+            <td class="celda-renglon">
                 <strong>${indice + 1}</strong>
             </td>
         `;
 
 
         /* DESCRIPCIÓN */
-        html += `
-            <td>
-                <input
-                    type="text"
-                    class="campo descripcion-input"
-                    value="${escaparHTML(renglon.descripcion)}"
-                    placeholder="Descripción del bien o servicio"
-                    onchange="cambiarDescripcion(${renglon.id}, this.value)"
-                >
-            </td>
-        `;
+
+        if (mostrarDescripcion) {
+
+            html += `
+                <td class="celda-descripcion">
+
+                    <input
+                        type="text"
+                        class="campo descripcion-input"
+                        value="${escaparHTML(renglon.descripcion)}"
+                        placeholder="Descripción"
+                        onchange="cambiarDescripcion(${renglon.id}, this.value)"
+                    >
+
+                </td>
+            `;
+        }
 
 
         /* CANTIDAD */
+
         html += `
             <td>
+
                 <input
                     type="number"
                     min="0"
@@ -264,11 +305,13 @@ function renderizarRenglones() {
                     value="${renglon.cantidad}"
                     onchange="cambiarCantidad(${renglon.id}, this.value)"
                 >
+
             </td>
         `;
 
 
-        /* PRECIOS DE PROVEEDORES */
+        /* PROVEEDORES */
+
         proveedores.forEach(proveedor => {
 
             const precio =
@@ -282,6 +325,8 @@ function renderizarRenglones() {
                 ? Number(precio) * Number(renglon.cantidad || 0)
                 : "";
 
+
+            /* UNITARIO */
 
             html += `
                 <td
@@ -302,6 +347,8 @@ function renderizarRenglones() {
             `;
 
 
+            /* TOTAL */
+
             html += `
                 <td
                     id="total-${renglon.id}-${proveedor.id}"
@@ -313,36 +360,16 @@ function renderizarRenglones() {
                     }
                 </td>
             `;
+
         });
 
 
-        /* GANADOR */
-        html += `
-            <td
-                id="ganador-${renglon.id}"
-                class="ganador-texto"
-            >
-                —
-            </td>
-        `;
-
-
-        /* TOTAL CONVENIENTE */
-        html += `
-            <td
-                id="conveniente-${renglon.id}"
-                class="ganador-texto"
-            >
-                —
-            </td>
-        `;
-
-
         /* ACCIONES */
-        html += `
-            <td class="no-print">
 
-                <div style="display:flex;gap:4px;justify-content:center;">
+        html += `
+            <td class="columna-acciones no-print">
+
+                <div class="acciones-renglon">
 
                     <button
                         class="btn-mas"
@@ -374,6 +401,21 @@ function renderizarRenglones() {
 
         cuerpo.appendChild(tr);
     });
+
+
+    /* Agregar encabezado de acciones al final */
+
+    const filaProveedores =
+        document.getElementById("filaProveedores");
+
+    filaProveedores.insertAdjacentHTML(
+        "beforeend",
+        `
+        <th rowspan="2" class="col-acciones no-print">
+            +
+        </th>
+        `
+    );
 }
 
 
@@ -401,21 +443,32 @@ function agregarProveedor() {
 function eliminarProveedor(id) {
 
     if (proveedores.length <= 2) {
+
         alert("Debe existir al menos dos proveedores.");
+
         return;
     }
 
-    const proveedor = proveedores.find(p => p.id === id);
+
+    const proveedor =
+        proveedores.find(p => p.id === id);
+
 
     if (!confirm(`¿Eliminar ${proveedor.nombre}?`)) {
         return;
     }
 
-    proveedores = proveedores.filter(p => p.id !== id);
+
+    proveedores =
+        proveedores.filter(p => p.id !== id);
+
 
     renglones.forEach(renglon => {
+
         delete renglon.precios[id];
+
     });
+
 
     renderizarTabla();
 }
@@ -427,7 +480,9 @@ function eliminarProveedor(id) {
 
 function cambiarNombreProveedor(id, nombre) {
 
-    const proveedor = proveedores.find(p => p.id === id);
+    const proveedor =
+        proveedores.find(p => p.id === id);
+
 
     if (proveedor) {
 
@@ -448,11 +503,16 @@ function cambiarNombreProveedor(id, nombre) {
 function agregarRenglon() {
 
     const nuevo = {
+
         id: siguienteRenglonId,
+
         descripcion: "",
+
         cantidad: 1,
+
         precios: {}
     };
+
 
     siguienteRenglonId++;
 
@@ -461,18 +521,21 @@ function agregarRenglon() {
     renderizarTabla();
 
 
-    /* Llevar el usuario hacia el nuevo renglón */
     setTimeout(() => {
 
         const filas =
-            document.querySelectorAll("#cuerpoTabla tr");
+            document.querySelectorAll(
+                "#cuerpoTabla tr"
+            );
+
 
         if (filas.length > 0) {
 
-            filas[filas.length - 1].scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
+            filas[filas.length - 1]
+                .scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
         }
 
     }, 100);
@@ -486,12 +549,18 @@ function agregarRenglon() {
 function eliminarRenglon(id) {
 
     if (renglones.length <= 1) {
+
         alert("Debe existir al menos un renglón.");
+
         return;
     }
 
+
     renglones =
-        renglones.filter(renglon => renglon.id !== id);
+        renglones.filter(
+            renglon => renglon.id !== id
+        );
+
 
     renderizarTabla();
 }
@@ -506,7 +575,9 @@ function cambiarDescripcion(id, valor) {
     const renglon =
         renglones.find(r => r.id === id);
 
+
     if (renglon) {
+
         renglon.descripcion = valor;
     }
 }
@@ -521,11 +592,15 @@ function cambiarCantidad(id, valor) {
     const renglon =
         renglones.find(r => r.id === id);
 
+
     if (!renglon) {
         return;
     }
 
-    renglon.cantidad = Number(valor) || 0;
+
+    renglon.cantidad =
+        Number(valor) || 0;
+
 
     renderizarTabla();
 }
@@ -535,14 +610,22 @@ function cambiarCantidad(id, valor) {
    CAMBIAR PRECIO
 ===================================================== */
 
-function cambiarPrecio(renglonId, proveedorId, valor) {
+function cambiarPrecio(
+    renglonId,
+    proveedorId,
+    valor
+) {
 
     const renglon =
-        renglones.find(r => r.id === renglonId);
+        renglones.find(
+            r => r.id === renglonId
+        );
+
 
     if (!renglon) {
         return;
     }
+
 
     if (valor === "") {
 
@@ -553,6 +636,7 @@ function cambiarPrecio(renglonId, proveedorId, valor) {
         renglon.precios[proveedorId] =
             Number(valor);
     }
+
 
     renderizarTabla();
 }
@@ -566,14 +650,20 @@ function calcularResultados() {
 
     let totalesProveedores = {};
 
+
     proveedores.forEach(proveedor => {
+
         totalesProveedores[proveedor.id] = 0;
+
     });
+
+
+    let resultadosPorRenglon = [];
 
 
     renglones.forEach(renglon => {
 
-        /* Limpiar celdas ganadoras */
+        /* Limpiar ganador anterior */
 
         proveedores.forEach(proveedor => {
 
@@ -582,22 +672,30 @@ function calcularResultados() {
                     `unitario-${renglon.id}-${proveedor.id}`
                 );
 
+
             const total =
                 document.getElementById(
                     `total-${renglon.id}-${proveedor.id}`
                 );
 
+
             if (unitario) {
-                unitario.classList.remove("ganador-celda");
+
+                unitario.classList.remove(
+                    "ganador-celda"
+                );
             }
+
 
             if (total) {
-                total.classList.remove("ganador-celda");
+
+                total.classList.remove(
+                    "ganador-celda"
+                );
             }
+
         });
 
-
-        /* Buscar menor */
 
         let ofertas = [];
 
@@ -620,58 +718,60 @@ function calcularResultados() {
 
 
                 ofertas.push({
+
                     proveedor: proveedor,
+
                     unitario: Number(precio),
+
                     total: total
+
                 });
 
 
-                totalesProveedores[proveedor.id] += total;
+                totalesProveedores[
+                    proveedor.id
+                ] += total;
             }
 
         });
 
 
-        const ganadorElemento =
-            document.getElementById(
-                `ganador-${renglon.id}`
-            );
-
-        const convenienteElemento =
-            document.getElementById(
-                `conveniente-${renglon.id}`
-            );
-
-
         if (ofertas.length === 0) {
 
-            if (ganadorElemento) {
-                ganadorElemento.textContent = "—";
-            }
+            resultadosPorRenglon.push({
 
-            if (convenienteElemento) {
-                convenienteElemento.textContent = "—";
-            }
+                renglon: renglon,
+
+                ganador: null,
+
+                precio: null,
+
+                empate: false
+
+            });
 
             return;
         }
 
 
-        /* Menor precio */
+        /* MENOR PRECIO */
 
         const menor =
             Math.min(
-                ...ofertas.map(oferta => oferta.total)
+                ...ofertas.map(
+                    oferta => oferta.total
+                )
             );
 
-
-        /* Puede haber empate */
 
         const ganadores =
             ofertas.filter(
-                oferta => oferta.total === menor
+                oferta =>
+                    oferta.total === menor
             );
 
+
+        /* UN SOLO GANADOR */
 
         if (ganadores.length === 1) {
 
@@ -679,14 +779,12 @@ function calcularResultados() {
                 ganadores[0];
 
 
-            /* Pintar UNITARIO */
             const unitario =
                 document.getElementById(
                     `unitario-${renglon.id}-${ganador.proveedor.id}`
                 );
 
 
-            /* Pintar TOTAL */
             const total =
                 document.getElementById(
                     `total-${renglon.id}-${ganador.proveedor.id}`
@@ -694,30 +792,39 @@ function calcularResultados() {
 
 
             if (unitario) {
-                unitario.classList.add("ganador-celda");
+
+                unitario.classList.add(
+                    "ganador-celda"
+                );
             }
+
 
             if (total) {
-                total.classList.add("ganador-celda");
+
+                total.classList.add(
+                    "ganador-celda"
+                );
             }
 
 
-            if (ganadorElemento) {
+            resultadosPorRenglon.push({
 
-                ganadorElemento.textContent =
-                    ganador.proveedor.nombre;
-            }
+                renglon: renglon,
+
+                ganador: ganador.proveedor,
+
+                precio: ganador.total,
+
+                empate: false
+
+            });
+
+        }
 
 
-            if (convenienteElemento) {
+        /* EMPATE */
 
-                convenienteElemento.textContent =
-                    formatearMoneda(ganador.total);
-            }
-
-        } else {
-
-            /* EMPATE */
+        else {
 
             ganadores.forEach(ganador => {
 
@@ -726,41 +833,151 @@ function calcularResultados() {
                         `unitario-${renglon.id}-${ganador.proveedor.id}`
                     );
 
+
                 const total =
                     document.getElementById(
                         `total-${renglon.id}-${ganador.proveedor.id}`
                     );
 
+
                 if (unitario) {
-                    unitario.classList.add("ganador-celda");
+
+                    unitario.classList.add(
+                        "ganador-celda"
+                    );
                 }
 
+
                 if (total) {
-                    total.classList.add("ganador-celda");
+
+                    total.classList.add(
+                        "ganador-celda"
+                    );
                 }
 
             });
 
 
-            if (ganadorElemento) {
+            resultadosPorRenglon.push({
 
-                ganadorElemento.textContent =
-                    "EMPATE";
-            }
+                renglon: renglon,
 
+                ganador: ganadores
+                    .map(g => g.proveedor),
 
-            if (convenienteElemento) {
+                precio: menor,
 
-                convenienteElemento.textContent =
-                    formatearMoneda(menor);
-            }
+                empate: true
+
+            });
+
         }
 
     });
 
 
-    renderizarTotales(totalesProveedores);
-    calcularPropuestaConveniente(totalesProveedores);
+    renderizarTotales(
+        totalesProveedores
+    );
+
+
+    renderizarResultadosRenglones(
+        resultadosPorRenglon
+    );
+
+
+    calcularPropuestaConveniente(
+        totalesProveedores
+    );
+}
+
+
+/* =====================================================
+   RESULTADO POR RENGLÓN
+===================================================== */
+
+function renderizarResultadosRenglones(
+    resultados
+) {
+
+    const cuerpo =
+        document.getElementById(
+            "resultadosRenglones"
+        );
+
+
+    if (!cuerpo) {
+        return;
+    }
+
+
+    cuerpo.innerHTML = "";
+
+
+    resultados.forEach((resultado, indice) => {
+
+        const tr =
+            document.createElement("tr");
+
+
+        let proveedorTexto = "—";
+
+
+        if (resultado.ganador) {
+
+            if (resultado.empate) {
+
+                proveedorTexto =
+                    resultado.ganador
+                        .map(
+                            proveedor =>
+                                escaparHTML(
+                                    proveedor.nombre
+                                )
+                        )
+                        .join(" / ");
+
+            } else {
+
+                proveedorTexto =
+                    escaparHTML(
+                        resultado.ganador.nombre
+                    );
+            }
+        }
+
+
+        let precioTexto = "—";
+
+
+        if (resultado.precio !== null) {
+
+            precioTexto =
+                formatearMoneda(
+                    resultado.precio
+                );
+        }
+
+
+        tr.innerHTML = `
+
+            <td>
+                ${indice + 1}
+            </td>
+
+            <td class="resultado-proveedor">
+                ${proveedorTexto}
+            </td>
+
+            <td class="resultado-precio">
+                ${precioTexto}
+            </td>
+
+        `;
+
+
+        cuerpo.appendChild(tr);
+    });
 }
 
 
@@ -768,31 +985,50 @@ function calcularResultados() {
    TOTALES POR PROVEEDOR
 ===================================================== */
 
-function renderizarTotales(totalesProveedores) {
+function renderizarTotales(
+    totalesProveedores
+) {
 
     const pie =
-        document.getElementById("pieTabla");
+        document.getElementById(
+            "pieTabla"
+        );
+
 
     pie.innerHTML = "";
 
 
-    const tr = document.createElement("tr");
+    const tr =
+        document.createElement("tr");
+
+
+    const colspanInicial =
+        mostrarDescripcion
+        ? 3
+        : 2;
 
 
     tr.innerHTML = `
-        <td colspan="3" class="total-general">
+
+        <td
+            colspan="${colspanInicial}"
+            class="total-general">
             TOTAL
         </td>
+
     `;
 
 
     proveedores.forEach(proveedor => {
 
         const total =
-            totalesProveedores[proveedor.id] || 0;
+            totalesProveedores[
+                proveedor.id
+            ] || 0;
 
 
         tr.innerHTML += `
+
             <td class="total-proveedor">
                 TOTAL
             </td>
@@ -800,20 +1036,17 @@ function renderizarTotales(totalesProveedores) {
             <td class="total-proveedor">
                 ${formatearMoneda(total)}
             </td>
+
         `;
     });
 
 
     tr.innerHTML += `
-        <td class="total-general">
-            PROPUESTA
+
+        <td
+            class="no-print">
         </td>
 
-        <td class="total-general">
-            —
-        </td>
-
-        <td class="no-print"></td>
     `;
 
 
@@ -825,10 +1058,14 @@ function renderizarTotales(totalesProveedores) {
    PROPUESTA CONVENIENTE GENERAL
 ===================================================== */
 
-function calcularPropuestaConveniente(totalesProveedores) {
+function calcularPropuestaConveniente(
+    totalesProveedores
+) {
 
     const resultado =
-        document.getElementById("resultadoGeneral");
+        document.getElementById(
+            "resultadoGeneral"
+        );
 
 
     if (!resultado) {
@@ -839,11 +1076,18 @@ function calcularPropuestaConveniente(totalesProveedores) {
     let proveedoresConTotal =
         proveedores
             .map(proveedor => ({
+
                 proveedor: proveedor,
+
                 total:
-                    totalesProveedores[proveedor.id] || 0
+                    totalesProveedores[
+                        proveedor.id
+                    ] || 0
+
             }))
-            .filter(item => item.total > 0);
+            .filter(
+                item => item.total > 0
+            );
 
 
     if (proveedoresConTotal.length === 0) {
@@ -857,35 +1101,59 @@ function calcularPropuestaConveniente(totalesProveedores) {
 
     const menor =
         Math.min(
-            ...proveedoresConTotal.map(item => item.total)
+            ...proveedoresConTotal.map(
+                item => item.total
+            )
         );
 
 
     const ganadores =
         proveedoresConTotal.filter(
-            item => item.total === menor
+            item =>
+                item.total === menor
         );
 
 
     if (ganadores.length === 1) {
 
         resultado.innerHTML = `
-            <strong>${escaparHTML(ganadores[0].proveedor.nombre)}</strong>
+
+            <strong>
+                ${escaparHTML(
+                    ganadores[0]
+                        .proveedor
+                        .nombre
+                )}
+            </strong>
+
             —
-            ${formatearMoneda(ganadores[0].total)}
+
+            ${formatearMoneda(
+                ganadores[0].total
+            )}
+
         `;
 
     } else {
 
         resultado.innerHTML = `
-            EMPATE —
+
+            <strong>EMPATE</strong>
+
+            —
+
             ${ganadores
                 .map(item =>
-                    escaparHTML(item.proveedor.nombre)
+                    escaparHTML(
+                        item.proveedor.nombre
+                    )
                 )
                 .join(" / ")}
+
             —
+
             ${formatearMoneda(menor)}
+
         `;
     }
 }
@@ -897,12 +1165,15 @@ function calcularPropuestaConveniente(totalesProveedores) {
 
 function formatearMoneda(numero) {
 
-    return new Intl.NumberFormat("es-AR", {
-        style: "currency",
-        currency: "ARS",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }).format(numero || 0);
+    return new Intl.NumberFormat(
+        "es-AR",
+        {
+            style: "currency",
+            currency: "ARS",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    ).format(numero || 0);
 }
 
 
@@ -938,44 +1209,72 @@ function imprimirDocumento() {
 function descargarPDF() {
 
     const elemento =
-        document.getElementById("documento");
+        document.getElementById(
+            "documento"
+        );
 
 
     const opciones = {
 
-        margin: 5,
+        margin: [
+            5,
+            5,
+            5,
+            5
+        ],
 
         filename:
             "Cuadro_Comparativo_de_Ofertas.pdf",
 
         image: {
+
             type: "jpeg",
-            quality: 0.98
+
+            quality: 0.95
+
         },
 
         html2canvas: {
+
             scale: 2,
-            useCORS: true
+
+            useCORS: true,
+
+            backgroundColor: "#ffffff",
+
+            scrollX: 0,
+
+            scrollY: 0
+
         },
 
         jsPDF: {
+
             unit: "mm",
+
             format: "a4",
-            orientation: "landscape"
+
+            orientation: "portrait"
+
         },
 
         pagebreak: {
+
             mode: [
-                "avoid-all",
                 "css",
                 "legacy"
             ]
+
         }
+
     };
 
 
     html2pdf()
+
         .set(opciones)
+
         .from(elemento)
+
         .save();
 }
