@@ -774,7 +774,38 @@ body {
 }
 
 
-/* Tabla principal en PDF */
+/* =====================================================
+   CORRECCIÓN FECHA EN PDF
+===================================================== */
+
+#documento[class*="pdf-proveedores-"] #fecha {
+
+    display:
+        none;
+}
+
+#documento[class*="pdf-proveedores-"] .fecha-impresion {
+
+    display:
+        block;
+
+    border-bottom:
+        1px solid #222;
+
+    padding:
+        2px 3px;
+
+    font-size:
+        9px;
+
+    min-height:
+        14px;
+}
+
+
+/* =====================================================
+   TABLA PRINCIPAL EN PDF
+===================================================== */
 
 #documento[class*="pdf-proveedores-"]
 #tablaComparativa {
@@ -793,7 +824,9 @@ body {
 }
 
 
-/* Título principal en PDF */
+/* =====================================================
+   TITULO PRINCIPAL EN PDF
+===================================================== */
 
 #documento[class*="pdf-proveedores-"]
 .tabla-principal-titulo {
@@ -815,7 +848,9 @@ body {
 }
 
 
-/* Columnas PDF */
+/* =====================================================
+   COLUMNAS PDF
+===================================================== */
 
 #documento[class*="pdf-proveedores-"]
 .col-reng {
