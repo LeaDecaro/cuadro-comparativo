@@ -36,13 +36,16 @@ body {
     height: 115px;
     background: #293f4c;
     color: white;
+
     display: flex;
     align-items: center;
+
     padding: 0 55px;
 }
 
 .logos {
     width: 100%;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -75,8 +78,11 @@ body {
 
 .titulo-seccion h1 {
     margin: 0 0 22px;
+
     font-size: 27px;
+
     text-decoration: underline;
+
     font-weight: 800;
 }
 
@@ -86,14 +92,22 @@ body {
 ===================================================== */
 
 .datos-expediente {
+
     display: grid;
-    grid-template-columns: 1fr 2fr 1.5fr 1.5fr;
-    gap: 10px;
+
+    grid-template-columns:
+        1fr 2fr;
+
+    grid-template-rows:
+        auto auto;
+
+    gap: 12px 20px;
 }
 
 .dato {
     display: flex;
     flex-direction: column;
+
     gap: 4px;
 }
 
@@ -104,10 +118,16 @@ body {
 
 .dato input {
     border: none;
-    border-bottom: 1px solid #222;
+
+    border-bottom:
+        1px solid #222;
+
     padding: 5px 3px;
+
     font-size: 13px;
+
     outline: none;
+
     width: 100%;
 }
 
@@ -117,44 +137,108 @@ body {
 
 
 /* =====================================================
+   FECHA
+===================================================== */
+
+.fecha-impresion {
+    display: none;
+}
+
+
+/* =====================================================
    BOTONES
 ===================================================== */
 
 .barra-herramientas {
+
     display: flex;
+
     gap: 8px;
+
     flex-wrap: wrap;
-    padding: 8px 35px 16px;
+
+    padding:
+        8px 35px 16px;
 }
 
 .btn {
+
     border: none;
+
     border-radius: 6px;
-    padding: 10px 14px;
+
+    padding:
+        10px 14px;
+
     font-size: 13px;
+
     font-weight: bold;
+
     cursor: pointer;
+
     transition: 0.15s;
 }
 
 .btn:hover {
-    transform: translateY(-1px);
+
+    transform:
+        translateY(-1px);
+
     opacity: 0.9;
 }
 
 .btn-agregar {
+
     background: #1d6fa5;
+
     color: white;
 }
 
 .btn-imprimir {
+
     background: #374151;
+
     color: white;
 }
 
 .btn-pdf {
+
     background: #b91c1c;
+
     color: white;
+}
+
+
+/* =====================================================
+   TITULO TABLA PRINCIPAL
+===================================================== */
+
+.tabla-principal-titulo {
+
+    margin:
+        0 20px;
+
+    background:
+        #293f4c;
+
+    color: white;
+
+    text-align: center;
+
+    font-weight: bold;
+
+    padding: 8px;
+
+    font-size: 12px;
+
+    border:
+        1px solid #111;
+
+    border-bottom: none;
+
+    max-width: max-content;
+
+    min-width: 0;
 }
 
 
@@ -163,30 +247,44 @@ body {
 ===================================================== */
 
 .tabla-wrapper {
+
     width: 100%;
+
     overflow-x: auto;
-    padding: 0 20px;
+
+    padding:
+        0 20px;
 }
 
 #tablaComparativa {
-    border-collapse: collapse;
 
-    /* IMPORTANTE:
-       no obliga a ocupar toda la pantalla */
-    width: max-content;
+    border-collapse:
+        collapse;
 
-    min-width: 0;
+    width:
+        max-content;
 
-    font-size: 12px;
+    min-width:
+        0;
+
+    font-size:
+        12px;
 }
 
 #tablaComparativa th,
 #tablaComparativa td {
-    border: 1px solid #111;
-    padding: 5px;
 
-    text-align: center;
-    vertical-align: middle;
+    border:
+        1px solid #111;
+
+    padding:
+        5px;
+
+    text-align:
+        center;
+
+    vertical-align:
+        middle;
 }
 
 
@@ -195,35 +293,66 @@ body {
 ===================================================== */
 
 .proveedor-header {
-    min-width: 0;
-    width: 190px;
-    position: relative;
-    background: #f4f4f4;
+
+    min-width:
+        0;
+
+    width:
+        190px;
+
+    position:
+        relative;
+
+    background:
+        #f4f4f4;
 }
 
 .proveedor-header-contenido {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        5px;
 }
 
 .proveedor-nombre {
-    width: 125px;
 
-    border: none;
-    background: transparent;
+    width:
+        125px;
 
-    font-weight: bold;
-    font-size: 12px;
+    border:
+        none;
 
-    text-align: center;
-    outline: none;
+    background:
+        transparent;
+
+    font-weight:
+        bold;
+
+    font-size:
+        12px;
+
+    text-align:
+        center;
+
+    outline:
+        none;
 }
 
 .proveedor-nombre:focus {
-    background: white;
-    border: 1px solid #777;
+
+    background:
+        white;
+
+    border:
+        1px solid #777;
 }
 
 
@@ -232,26 +361,45 @@ body {
 ===================================================== */
 
 .subheader {
-    width: auto;
-    min-width: 0;
 
-    padding-left: 7px !important;
-    padding-right: 7px !important;
+    width:
+        auto;
 
-    font-size: 10px;
+    min-width:
+        0;
 
-    text-align: center;
-    white-space: nowrap;
+    padding-left:
+        7px !important;
+
+    padding-right:
+        7px !important;
+
+    font-size:
+        10px;
+
+    text-align:
+        center;
+
+    white-space:
+        nowrap;
 }
 
 .subheader-unitario {
-    width: 70px;
-    min-width: 70px;
+
+    width:
+        70px;
+
+    min-width:
+        70px;
 }
 
 .subheader-total {
-    width: 55px;
-    min-width: 55px;
+
+    width:
+        55px;
+
+    min-width:
+        55px;
 }
 
 
@@ -260,23 +408,39 @@ body {
 ===================================================== */
 
 .col-reng {
-    width: 48px;
-    min-width: 48px;
+
+    width:
+        48px;
+
+    min-width:
+        48px;
 }
 
 .col-descripcion {
-    width: 190px;
-    min-width: 190px;
+
+    width:
+        190px;
+
+    min-width:
+        190px;
 }
 
 .col-cantidad {
-    width: 55px;
-    min-width: 55px;
+
+    width:
+        55px;
+
+    min-width:
+        55px;
 }
 
 .col-acciones {
-    width: 42px;
-    min-width: 42px;
+
+    width:
+        42px;
+
+    min-width:
+        42px;
 }
 
 
@@ -285,8 +449,12 @@ body {
 ===================================================== */
 
 .celda-precio {
-    text-align: center !important;
-    white-space: nowrap;
+
+    text-align:
+        center !important;
+
+    white-space:
+        nowrap;
 }
 
 
@@ -295,29 +463,46 @@ body {
 ===================================================== */
 
 .campo {
-    width: 100%;
 
-    border: none;
-    outline: none;
-    background: transparent;
+    width:
+        100%;
 
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
+    border:
+        none;
 
-    text-align: center;
+    outline:
+        none;
+
+    background:
+        transparent;
+
+    font-family:
+        Arial, Helvetica, sans-serif;
+
+    font-size:
+        12px;
+
+    text-align:
+        center;
 }
 
 .campo:focus {
-    background: #fff8dc;
+
+    background:
+        #fff8dc;
 }
 
 .descripcion-input {
-    text-align: left;
+
+    text-align:
+        left;
 }
 
 .cantidad-input,
 .precio-input {
-    text-align: center;
+
+    text-align:
+        center;
 }
 
 
@@ -326,27 +511,48 @@ body {
 ===================================================== */
 
 .btn-mas {
-    border: 1px solid #1d6fa5;
-    background: white;
-    color: #1d6fa5;
 
-    border-radius: 50%;
+    border:
+        1px solid #1d6fa5;
 
-    width: 24px;
-    height: 24px;
+    background:
+        white;
 
-    font-size: 17px;
-    line-height: 17px;
+    color:
+        #1d6fa5;
 
-    cursor: pointer;
-    font-weight: bold;
+    border-radius:
+        50%;
 
-    padding: 0;
+    width:
+        24px;
+
+    height:
+        24px;
+
+    font-size:
+        17px;
+
+    line-height:
+        17px;
+
+    cursor:
+        pointer;
+
+    font-weight:
+        bold;
+
+    padding:
+        0;
 }
 
 .btn-mas:hover {
-    background: #1d6fa5;
-    color: white;
+
+    background:
+        #1d6fa5;
+
+    color:
+        white;
 }
 
 
@@ -355,18 +561,30 @@ body {
 ===================================================== */
 
 .btn-eliminar {
-    border: none;
-    background: transparent;
-    color: #b91c1c;
 
-    cursor: pointer;
-    font-size: 16px;
+    border:
+        none;
 
-    padding: 0;
+    background:
+        transparent;
+
+    color:
+        #b91c1c;
+
+    cursor:
+        pointer;
+
+    font-size:
+        16px;
+
+    padding:
+        0;
 }
 
 .btn-eliminar:hover {
-    transform: scale(1.2);
+
+    transform:
+        scale(1.2);
 }
 
 
@@ -375,10 +593,18 @@ body {
 ===================================================== */
 
 .acciones-renglon {
-    display: flex;
-    gap: 3px;
-    justify-content: center;
-    align-items: center;
+
+    display:
+        flex;
+
+    gap:
+        3px;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
 }
 
 
@@ -387,8 +613,12 @@ body {
 ===================================================== */
 
 .ganador-celda {
-    background: #8eb4dc !important;
-    font-weight: bold;
+
+    background:
+        #8eb4dc !important;
+
+    font-weight:
+        bold;
 }
 
 
@@ -397,15 +627,24 @@ body {
 ===================================================== */
 
 .total-general {
-    background: #f2f2f2;
-    font-weight: bold;
+
+    background:
+        #f2f2f2;
+
+    font-weight:
+        bold;
 }
 
 .total-proveedor {
-    font-weight: bold;
-    background: #f2f2f2;
 
-    text-align: center !important;
+    font-weight:
+        bold;
+
+    background:
+        #f2f2f2;
+
+    text-align:
+        center !important;
 }
 
 
@@ -414,43 +653,74 @@ body {
 ===================================================== */
 
 .resultados-renglones {
-    margin: 18px 35px 0;
-    border: 1px solid #111;
+
+    margin:
+        18px 35px 0;
+
+    border:
+        1px solid #111;
 }
 
 .resultado-renglones-titulo {
-    background: #293f4c;
-    color: white;
 
-    text-align: center;
-    font-weight: bold;
+    background:
+        #293f4c;
 
-    padding: 8px;
-    font-size: 12px;
+    color:
+        white;
+
+    text-align:
+        center;
+
+    font-weight:
+        bold;
+
+    padding:
+        8px;
+
+    font-size:
+        12px;
 }
 
 .tabla-resultados {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
+
+    width:
+        100%;
+
+    border-collapse:
+        collapse;
+
+    font-size:
+        12px;
 }
 
 .tabla-resultados th,
 .tabla-resultados td {
-    border: 1px solid #111;
-    padding: 5px;
 
-    text-align: center;
+    border:
+        1px solid #111;
+
+    padding:
+        5px;
+
+    text-align:
+        center;
 }
 
 .tabla-resultados th {
-    background: #f2f2f2;
-    font-weight: bold;
+
+    background:
+        #f2f2f2;
+
+    font-weight:
+        bold;
 }
 
 .resultado-proveedor,
 .resultado-precio {
-    font-weight: bold;
+
+    font-weight:
+        bold;
 }
 
 
@@ -459,17 +729,358 @@ body {
 ===================================================== */
 
 .pie-documento {
-    margin: 18px 35px 0;
 
-    border-top: 1px solid #333;
+    margin:
+        18px 35px 0;
 
-    padding-top: 10px;
+    border-top:
+        1px solid #333;
 
-    display: flex;
-    justify-content: space-between;
+    padding-top:
+        10px;
 
-    font-size: 10px;
-    color: #444;
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    font-size:
+        10px;
+
+    color:
+        #444;
+}
+
+
+/* =====================================================
+   CONFIGURACIÓN PDF
+   A4 VERTICAL + ADAPTACIÓN AUTOMÁTICA
+===================================================== */
+
+#documento[class*="pdf-proveedores-"] {
+
+    width:
+        100%;
+
+    max-width:
+        none;
+
+    margin:
+        0;
+
+    padding-bottom:
+        10px;
+}
+
+
+/* Tabla principal en PDF */
+
+#documento[class*="pdf-proveedores-"]
+#tablaComparativa {
+
+    width:
+        100%;
+
+    min-width:
+        0;
+
+    table-layout:
+        fixed;
+
+    font-size:
+        8px;
+}
+
+
+/* Título principal en PDF */
+
+#documento[class*="pdf-proveedores-"]
+.tabla-principal-titulo {
+
+    max-width:
+        none;
+
+    width:
+        calc(100% - 40px);
+
+    margin:
+        0 20px;
+
+    font-size:
+        8px;
+
+    padding:
+        4px;
+}
+
+
+/* Columnas PDF */
+
+#documento[class*="pdf-proveedores-"]
+.col-reng {
+
+    width:
+        6%;
+}
+
+#documento[class*="pdf-proveedores-"]
+.col-cantidad {
+
+    width:
+        6%;
+}
+
+#documento[class*="pdf-proveedores-"]
+.col-descripcion {
+
+    width:
+        18%;
+}
+
+#documento[class*="pdf-proveedores-"]
+.proveedor-header {
+
+    width:
+        auto;
+
+    min-width:
+        0;
+}
+
+#documento[class*="pdf-proveedores-"]
+.subheader {
+
+    width:
+        auto;
+
+    min-width:
+        0;
+
+    padding:
+        2px !important;
+
+    white-space:
+        nowrap;
+}
+
+#documento[class*="pdf-proveedores-"]
+.subheader-unitario,
+#documento[class*="pdf-proveedores-"]
+.subheader-total {
+
+    width:
+        auto;
+
+    min-width:
+        0;
+}
+
+#documento[class*="pdf-proveedores-"]
+.proveedor-nombre {
+
+    width:
+        100%;
+
+    font-size:
+        8px;
+}
+
+#documento[class*="pdf-proveedores-"]
+.campo {
+
+    font-size:
+        8px;
+}
+
+#documento[class*="pdf-proveedores-"]
+#tablaComparativa th,
+#documento[class*="pdf-proveedores-"]
+#tablaComparativa td {
+
+    padding:
+        3px 2px;
+
+    word-wrap:
+        break-word;
+
+    overflow-wrap:
+        anywhere;
+}
+
+
+/* =====================================================
+   ESCALA PDF SEGÚN CANTIDAD DE PROVEEDORES
+===================================================== */
+
+
+/* 2 proveedores */
+
+#documento.pdf-proveedores-2
+#tablaComparativa {
+
+    font-size:
+        8px;
+}
+
+
+/* 3 proveedores */
+
+#documento.pdf-proveedores-3
+#tablaComparativa {
+
+    font-size:
+        8px;
+}
+
+
+/* 4 proveedores */
+
+#documento.pdf-proveedores-4
+#tablaComparativa {
+
+    font-size:
+        7.5px;
+}
+
+
+/* 5 proveedores */
+
+#documento.pdf-proveedores-5
+#tablaComparativa {
+
+    font-size:
+        7px;
+}
+
+#documento.pdf-proveedores-5 .proveedor-nombre,
+#documento.pdf-proveedores-5 .campo {
+
+    font-size:
+        7px;
+}
+
+
+/* 6 proveedores */
+
+#documento.pdf-proveedores-6
+#tablaComparativa {
+
+    font-size:
+        6.6px;
+}
+
+#documento.pdf-proveedores-6 .proveedor-nombre,
+#documento.pdf-proveedores-6 .campo {
+
+    font-size:
+        6.6px;
+}
+
+
+/* 7 proveedores */
+
+#documento.pdf-proveedores-7
+#tablaComparativa {
+
+    font-size:
+        6.2px;
+}
+
+#documento.pdf-proveedores-7 .proveedor-nombre,
+#documento.pdf-proveedores-7 .campo {
+
+    font-size:
+        6.2px;
+}
+
+
+/* 8 proveedores */
+
+#documento.pdf-proveedores-8
+#tablaComparativa {
+
+    font-size:
+        5.8px;
+}
+
+#documento.pdf-proveedores-8 .proveedor-nombre,
+#documento.pdf-proveedores-8 .campo {
+
+    font-size:
+        5.8px;
+}
+
+
+/* 9 proveedores */
+
+#documento.pdf-proveedores-9
+#tablaComparativa {
+
+    font-size:
+        5.4px;
+}
+
+#documento.pdf-proveedores-9 .proveedor-nombre,
+#documento.pdf-proveedores-9 .campo {
+
+    font-size:
+        5.4px;
+}
+
+
+/* 10 proveedores */
+
+#documento.pdf-proveedores-10
+#tablaComparativa {
+
+    font-size:
+        5px;
+}
+
+#documento.pdf-proveedores-10 .proveedor-nombre,
+#documento.pdf-proveedores-10 .campo {
+
+    font-size:
+        5px;
+}
+
+
+/* =====================================================
+   RESULTADOS EN PDF
+===================================================== */
+
+#documento[class*="pdf-proveedores-"]
+.resultados-renglones {
+
+    margin:
+        8px 20px 0;
+}
+
+#documento[class*="pdf-proveedores-"]
+.resultado-renglones-titulo {
+
+    padding:
+        4px;
+
+    font-size:
+        8px;
+}
+
+#documento[class*="pdf-proveedores-"]
+.tabla-resultados {
+
+    font-size:
+        8px;
+}
+
+#documento[class*="pdf-proveedores-"]
+.tabla-resultados th,
+#documento[class*="pdf-proveedores-"]
+.tabla-resultados td {
+
+    padding:
+        3px;
 }
 
 
@@ -480,205 +1091,444 @@ body {
 @media (max-width: 900px) {
 
     #documento {
-        margin: 0;
+
+        margin:
+            0;
     }
+
 
     .encabezado {
-        height: 95px;
-        padding: 0 20px;
+
+        height:
+            95px;
+
+        padding:
+            0 20px;
     }
+
 
     .logo-ministerio {
-        font-size: 12px;
+
+        font-size:
+            12px;
     }
+
 
     .logo-neuquen strong {
-        font-size: 25px;
+
+        font-size:
+            25px;
     }
+
 
     .titulo-seccion {
-        padding: 20px 15px 12px;
+
+        padding:
+            20px 15px 12px;
     }
+
 
     .titulo-seccion h1 {
-        font-size: 21px;
+
+        font-size:
+            21px;
     }
+
 
     .datos-expediente {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+            1fr;
+
+        grid-template-rows:
+            auto;
     }
+
 
     .barra-herramientas {
-        padding: 8px 15px 15px;
+
+        padding:
+            8px 15px 15px;
     }
+
+
+    .tabla-principal-titulo {
+
+        margin:
+            0 8px;
+
+        width:
+            max-content;
+    }
+
 
     .tabla-wrapper {
-        padding: 0 8px;
+
+        padding:
+            0 8px;
     }
+
 
     .resultados-renglones {
-        margin-left: 15px;
-        margin-right: 15px;
+
+        margin-left:
+            15px;
+
+        margin-right:
+            15px;
     }
 
+
     .pie-documento {
-        margin-left: 15px;
-        margin-right: 15px;
+
+        margin-left:
+            15px;
+
+        margin-right:
+            15px;
     }
 }
 
 
 /* =====================================================
    IMPRESIÓN
-   NO MODIFICAMOS LA CONFIGURACIÓN DEL PDF
 ===================================================== */
 
 @media print {
 
     @page {
-        size: A4 portrait;
-        margin: 5mm;
+
+        size:
+            A4 portrait;
+
+        margin:
+            5mm;
     }
+
 
     html,
     body {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        background: white;
+
+        width:
+            100%;
+
+        margin:
+            0;
+
+        padding:
+            0;
+
+        background:
+            white;
     }
+
 
     #documento {
-        width: 100%;
-        max-width: none;
-        margin: 0;
-        padding: 0;
+
+        width:
+            100%;
+
+        max-width:
+            none;
+
+        margin:
+            0;
+
+        padding:
+            0;
     }
+
 
     .no-print {
-        display: none !important;
+
+        display:
+            none !important;
     }
+
 
     .encabezado {
-        height: 75px;
-        padding: 0 20px;
+
+        height:
+            75px;
+
+        padding:
+            0 20px;
     }
+
 
     .logo-ministerio {
-        font-size: 10px;
+
+        font-size:
+            10px;
     }
+
 
     .logo-neuquen {
-        font-size: 8px;
+
+        font-size:
+            8px;
     }
+
 
     .logo-neuquen strong {
-        font-size: 23px;
+
+        font-size:
+            23px;
     }
+
 
     .titulo-seccion {
-        padding: 10px 12px 8px;
+
+        padding:
+            10px 12px 8px;
     }
+
 
     .titulo-seccion h1 {
-        font-size: 17px;
-        margin-bottom: 12px;
+
+        font-size:
+            17px;
+
+        margin-bottom:
+            12px;
     }
+
 
     .datos-expediente {
-        gap: 6px;
+
+        gap:
+            6px 15px;
     }
+
 
     .dato {
-        gap: 2px;
+
+        gap:
+            2px;
     }
+
 
     .dato label {
-        font-size: 8px;
+
+        font-size:
+            8px;
     }
+
 
     .dato input {
-        font-size: 9px;
-        padding: 2px;
+
+        font-size:
+            9px;
+
+        padding:
+            2px;
     }
+
+
+    /* Fecha */
+
+    #fecha {
+
+        display:
+            none;
+    }
+
+
+    .fecha-impresion {
+
+        display:
+            block;
+
+        border-bottom:
+            1px solid #222;
+
+        padding:
+            2px 3px;
+
+        font-size:
+            9px;
+
+        min-height:
+            14px;
+    }
+
 
     .barra-herramientas {
-        display: none !important;
+
+        display:
+            none !important;
     }
+
+
+    /* Título tabla principal */
+
+    .tabla-principal-titulo {
+
+        width:
+            calc(100% - 24px);
+
+        max-width:
+            none;
+
+        margin:
+            0 12px;
+
+        padding:
+            4px;
+
+        font-size:
+            8px;
+    }
+
 
     .tabla-wrapper {
-        padding: 0;
-        overflow: visible;
-        width: 100%;
+
+        padding:
+            0;
+
+        overflow:
+            visible;
+
+        width:
+            100%;
     }
 
+
     #tablaComparativa {
-        width: 100%;
-        min-width: 0;
-        table-layout: fixed;
-        font-size: 8px;
+
+        width:
+            100%;
+
+        min-width:
+            0;
+
+        table-layout:
+            fixed;
+
+        font-size:
+            8px;
     }
+
 
     #tablaComparativa th,
     #tablaComparativa td {
-        padding: 3px 2px;
-        word-wrap: break-word;
+
+        padding:
+            3px 2px;
+
+        word-wrap:
+            break-word;
+
+        overflow-wrap:
+            anywhere;
     }
+
 
     .proveedor-header {
-        min-width: 0;
+
+        min-width:
+            0;
     }
+
 
     .proveedor-nombre {
-        width: 100%;
-        font-size: 8px;
+
+        width:
+            100%;
+
+        font-size:
+            8px;
     }
+
 
     .subheader {
-        min-width: 0;
-        font-size: 7px;
+
+        min-width:
+            0;
+
+        font-size:
+            7px;
     }
+
 
     .col-reng {
-        width: 8%;
-        min-width: 0;
+
+        width:
+            8%;
+
+        min-width:
+            0;
     }
+
 
     .col-descripcion {
-        width: 22%;
-        min-width: 0;
+
+        width:
+            22%;
+
+        min-width:
+            0;
     }
+
 
     .col-cantidad {
-        width: 8%;
-        min-width: 0;
+
+        width:
+            8%;
+
+        min-width:
+            0;
     }
+
 
     .campo {
-        font-size: 8px;
+
+        font-size:
+            8px;
     }
+
 
     .resultados-renglones {
-        margin: 8px 0 0;
+
+        margin:
+            8px 0 0;
     }
+
 
     .resultado-renglones-titulo {
-        padding: 4px;
-        font-size: 8px;
+
+        padding:
+            4px;
+
+        font-size:
+            8px;
     }
 
+
     .tabla-resultados {
-        font-size: 8px;
+
+        font-size:
+            8px;
     }
+
 
     .tabla-resultados th,
     .tabla-resultados td {
-        padding: 3px;
+
+        padding:
+            3px;
     }
 
+
     .pie-documento {
-        margin: 8px 0 0;
-        padding-top: 5px;
-        font-size: 7px;
+
+        margin:
+            8px 0 0;
+
+        padding-top:
+            5px;
+
+        font-size:
+            7px;
     }
 }
