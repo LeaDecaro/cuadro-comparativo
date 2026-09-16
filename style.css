@@ -117,6 +117,47 @@ body {
 
 
 /* =====================================================
+   DESCRIPCIÓN GENERAL
+===================================================== */
+
+.descripcion-general {
+    margin-top: 18px;
+}
+
+.descripcion-general.oculto {
+    display: none;
+}
+
+.btn-descripcion {
+    background: #1d6fa5;
+    color: white;
+}
+
+.descripcion-general label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.descripcion-general textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 70px;
+    padding: 8px;
+    border: 1px solid #888;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    outline: none;
+}
+
+.descripcion-general textarea:focus {
+    border-color: #1d6fa5;
+    background: #f8fbfd;
+}
+
+
+/* =====================================================
    BARRA DE HERRAMIENTAS
 ===================================================== */
 
@@ -511,5 +552,15 @@ thead th {
 
     .pie-documento {
         margin: 15px 0 0;
+    }
+
+    .descripcion-general {
+        margin-top: 10px;
+    }
+
+    .descripcion-general textarea {
+        border: none;
+        resize: none;
+        padding: 0;
     }
 }
