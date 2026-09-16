@@ -20,6 +20,7 @@
         <header class="encabezado">
 
             <div class="logos">
+
                 <div class="logo-ministerio">
                     Ministerio de Juventud,<br>
                     Deportes y Cultura
@@ -29,6 +30,7 @@
                     Provincia del<br>
                     <strong>neuquén</strong>
                 </div>
+
             </div>
 
         </header>
@@ -72,25 +74,62 @@
 
             </div>
 
+
+            <!-- DESCRIPCIÓN GENERAL -->
+            <div class="descripcion-general no-print">
+
+                <button
+                    type="button"
+                    id="btnDescripcion"
+                    class="btn btn-descripcion"
+                    onclick="alternarDescripcion()">
+                    ＋ Agregar descripción
+                </button>
+
+            </div>
+
+            <div
+                id="contenedorDescripcion"
+                class="descripcion-general oculto">
+
+                <label for="descripcionGeneral">
+                    DESCRIPCIÓN:
+                </label>
+
+                <textarea
+                    id="descripcionGeneral"
+                    placeholder="Ingrese la descripción general del cuadro comparativo..."
+                    rows="3"></textarea>
+
+            </div>
+
         </section>
 
 
         <!-- BOTONES -->
         <div class="barra-herramientas no-print">
 
-            <button class="btn btn-agregar" onclick="agregarRenglon()">
+            <button
+                class="btn btn-agregar"
+                onclick="agregarRenglon()">
                 ＋ Agregar renglón
             </button>
 
-            <button class="btn btn-agregar" onclick="agregarProveedor()">
+            <button
+                class="btn btn-agregar"
+                onclick="agregarProveedor()">
                 ＋ Agregar proveedor
             </button>
 
-            <button class="btn btn-imprimir" onclick="imprimirDocumento()">
+            <button
+                class="btn btn-imprimir"
+                onclick="imprimirDocumento()">
                 🖨 Imprimir
             </button>
 
-            <button class="btn btn-pdf" onclick="descargarPDF()">
+            <button
+                class="btn btn-pdf"
+                onclick="descargarPDF()">
                 📄 Descargar PDF
             </button>
 
