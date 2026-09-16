@@ -24,7 +24,7 @@ body {
     max-width: 1600px;
     margin: 25px auto;
     background: white;
-    padding-bottom: 35px;
+    padding-bottom: 30px;
 }
 
 
@@ -33,12 +33,12 @@ body {
 ===================================================== */
 
 .encabezado {
-    height: 125px;
+    height: 115px;
     background: #293f4c;
     color: white;
     display: flex;
     align-items: center;
-    padding: 0 70px;
+    padding: 0 55px;
 }
 
 .logos {
@@ -49,18 +49,18 @@ body {
 }
 
 .logo-ministerio {
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.2;
 }
 
 .logo-neuquen {
     text-align: center;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1;
 }
 
 .logo-neuquen strong {
-    font-size: 34px;
+    font-size: 32px;
     letter-spacing: -2px;
 }
 
@@ -70,12 +70,12 @@ body {
 ===================================================== */
 
 .titulo-seccion {
-    padding: 30px 45px 20px;
+    padding: 25px 35px 15px;
 }
 
 .titulo-seccion h1 {
-    margin: 0 0 28px;
-    font-size: 29px;
+    margin: 0 0 22px;
+    font-size: 27px;
     text-decoration: underline;
     font-weight: 800;
 }
@@ -88,25 +88,25 @@ body {
 .datos-expediente {
     display: grid;
     grid-template-columns: 1fr 2fr 1.5fr 1.5fr;
-    gap: 12px;
+    gap: 10px;
 }
 
 .dato {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
 }
 
 .dato label {
     font-weight: bold;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .dato input {
     border: none;
     border-bottom: 1px solid #222;
-    padding: 6px 3px;
-    font-size: 14px;
+    padding: 5px 3px;
+    font-size: 13px;
     outline: none;
     width: 100%;
 }
@@ -117,62 +117,21 @@ body {
 
 
 /* =====================================================
-   DESCRIPCIÓN GENERAL
-===================================================== */
-
-.descripcion-general {
-    margin-top: 18px;
-}
-
-.descripcion-general.oculto {
-    display: none;
-}
-
-.btn-descripcion {
-    background: #1d6fa5;
-    color: white;
-}
-
-.descripcion-general label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: bold;
-    font-size: 13px;
-}
-
-.descripcion-general textarea {
-    width: 100%;
-    resize: vertical;
-    min-height: 70px;
-    padding: 8px;
-    border: 1px solid #888;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    outline: none;
-}
-
-.descripcion-general textarea:focus {
-    border-color: #1d6fa5;
-    background: #f8fbfd;
-}
-
-
-/* =====================================================
    BARRA DE HERRAMIENTAS
 ===================================================== */
 
 .barra-herramientas {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
-    padding: 10px 45px 20px;
+    padding: 8px 35px 16px;
 }
 
 .btn {
     border: none;
     border-radius: 6px;
-    padding: 11px 16px;
-    font-size: 14px;
+    padding: 10px 14px;
+    font-size: 13px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.15s;
@@ -200,50 +159,59 @@ body {
 
 
 /* =====================================================
-   TABLA
+   TABLA PRINCIPAL
 ===================================================== */
 
 .tabla-wrapper {
     width: 100%;
     overflow-x: auto;
-    padding: 0 25px;
+    padding: 0 20px;
 }
 
-table {
+#tablaComparativa {
     border-collapse: collapse;
     width: max-content;
     min-width: 100%;
-    font-size: 13px;
+    font-size: 12px;
 }
 
-th,
-td {
+#tablaComparativa th,
+#tablaComparativa td {
     border: 1px solid #111;
-    padding: 6px;
+    padding: 5px;
     text-align: center;
     vertical-align: middle;
 }
 
 
-/* CABECERAS */
+/* =====================================================
+   CABECERAS
+===================================================== */
 
-thead th {
+#tablaComparativa thead th {
     background: #f4f4f4;
     font-weight: bold;
 }
 
 .proveedor-header {
-    min-width: 185px;
+    min-width: 150px;
     position: relative;
     background: #f4f4f4;
 }
 
+.proveedor-header-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
 .proveedor-nombre {
-    width: 125px;
+    width: 105px;
     border: none;
     background: transparent;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 12px;
     text-align: center;
     outline: none;
 }
@@ -254,46 +222,38 @@ thead th {
 }
 
 .subheader {
-    min-width: 92px;
-    font-size: 12px;
-}
-
-
-/* COLUMNAS FIJAS */
-
-.col-reng {
-    width: 60px;
-    min-width: 60px;
-}
-
-.col-descripcion {
-    width: 260px;
-    min-width: 260px;
-}
-
-.col-cantidad {
-    width: 80px;
-    min-width: 80px;
-}
-
-.col-ganador {
-    width: 180px;
-    min-width: 180px;
-}
-
-.col-total-conveniente {
-    width: 135px;
-    min-width: 135px;
-}
-
-.col-acciones {
-    width: 45px;
-    min-width: 45px;
+    min-width: 75px;
+    font-size: 10px;
 }
 
 
 /* =====================================================
-   CAMPOS DE LA TABLA
+   COLUMNAS
+===================================================== */
+
+.col-reng {
+    width: 48px;
+    min-width: 48px;
+}
+
+.col-descripcion {
+    width: 190px;
+    min-width: 190px;
+}
+
+.col-cantidad {
+    width: 55px;
+    min-width: 55px;
+}
+
+.col-acciones {
+    width: 42px;
+    min-width: 42px;
+}
+
+
+/* =====================================================
+   CAMPOS
 ===================================================== */
 
 .campo {
@@ -302,7 +262,7 @@ thead th {
     outline: none;
     background: transparent;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .campo:focus {
@@ -320,7 +280,7 @@ thead th {
 
 
 /* =====================================================
-   BOTON +
+   BOTÓN +
 ===================================================== */
 
 .btn-mas {
@@ -328,12 +288,13 @@ thead th {
     background: white;
     color: #1d6fa5;
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    font-size: 20px;
-    line-height: 20px;
+    width: 24px;
+    height: 24px;
+    font-size: 17px;
+    line-height: 17px;
     cursor: pointer;
     font-weight: bold;
+    padding: 0;
 }
 
 .btn-mas:hover {
@@ -343,7 +304,7 @@ thead th {
 
 
 /* =====================================================
-   BOTON ELIMINAR
+   BOTÓN ELIMINAR
 ===================================================== */
 
 .btn-eliminar {
@@ -352,6 +313,7 @@ thead th {
     color: #b91c1c;
     cursor: pointer;
     font-size: 16px;
+    padding: 0;
 }
 
 .btn-eliminar:hover {
@@ -360,30 +322,24 @@ thead th {
 
 
 /* =====================================================
-   CELDA GANADORA
+   ACCIONES RENGLÓN
+===================================================== */
+
+.acciones-renglon {
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* =====================================================
+   GANADOR
 ===================================================== */
 
 .ganador-celda {
     background: #8eb4dc !important;
     font-weight: bold;
-}
-
-.ganador-nombre {
-    font-weight: bold;
-}
-
-
-/* =====================================================
-   RESULTADOS
-===================================================== */
-
-.ganador-texto {
-    font-weight: bold;
-}
-
-.sin-precio {
-    color: #888;
-    font-style: italic;
 }
 
 
@@ -403,11 +359,56 @@ thead th {
 
 
 /* =====================================================
-   RESUMEN
+   RESULTADO POR RENGLÓN
+===================================================== */
+
+.resultados-renglones {
+    margin: 18px 35px 0;
+    border: 1px solid #111;
+}
+
+.resultado-renglones-titulo {
+    background: #293f4c;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 8px;
+    font-size: 12px;
+}
+
+.tabla-resultados {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.tabla-resultados th,
+.tabla-resultados td {
+    border: 1px solid #111;
+    padding: 5px;
+    text-align: center;
+}
+
+.tabla-resultados th {
+    background: #f2f2f2;
+    font-weight: bold;
+}
+
+.resultado-proveedor {
+    font-weight: bold;
+}
+
+.resultado-precio {
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   RESUMEN GENERAL
 ===================================================== */
 
 .resumen {
-    margin: 25px 45px;
+    margin: 18px 35px;
     border: 1px solid #111;
 }
 
@@ -416,14 +417,15 @@ thead th {
     color: white;
     text-align: center;
     font-weight: bold;
-    padding: 10px;
+    padding: 8px;
+    font-size: 12px;
 }
 
 .resultado-general {
-    padding: 16px;
+    padding: 12px;
     text-align: center;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 
@@ -432,12 +434,12 @@ thead th {
 ===================================================== */
 
 .pie-documento {
-    margin: 25px 45px 0;
+    margin: 18px 35px 0;
     border-top: 1px solid #333;
-    padding-top: 12px;
+    padding-top: 10px;
     display: flex;
     justify-content: space-between;
-    font-size: 11px;
+    font-size: 10px;
     color: #444;
 }
 
@@ -453,24 +455,24 @@ thead th {
     }
 
     .encabezado {
-        height: 100px;
-        padding: 0 25px;
+        height: 95px;
+        padding: 0 20px;
     }
 
     .logo-ministerio {
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .logo-neuquen strong {
-        font-size: 27px;
+        font-size: 25px;
     }
 
     .titulo-seccion {
-        padding: 25px 20px 15px;
+        padding: 20px 15px 12px;
     }
 
     .titulo-seccion h1 {
-        font-size: 23px;
+        font-size: 21px;
     }
 
     .datos-expediente {
@@ -478,19 +480,22 @@ thead th {
     }
 
     .barra-herramientas {
-        padding: 10px 20px 20px;
+        padding: 8px 15px 15px;
     }
 
     .tabla-wrapper {
-        padding: 0 10px;
+        padding: 0 8px;
     }
 
+    .resultados-renglones,
     .resumen {
-        margin: 20px;
+        margin-left: 15px;
+        margin-right: 15px;
     }
 
     .pie-documento {
-        margin: 20px;
+        margin-left: 15px;
+        margin-right: 15px;
     }
 }
 
@@ -502,15 +507,20 @@ thead th {
 @media print {
 
     @page {
-        size: landscape;
-        margin: 8mm;
+        size: A4 portrait;
+        margin: 5mm;
     }
 
+    html,
     body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
         background: white;
     }
 
     #documento {
+        width: 100%;
         max-width: none;
         margin: 0;
         padding: 0;
@@ -520,47 +530,140 @@ thead th {
         display: none !important;
     }
 
-    .dato input {
-        border: none;
-        padding: 0;
+    .encabezado {
+        height: 75px;
+        padding: 0 20px;
     }
 
-    .dato input::placeholder {
-        color: transparent;
-    }
-
-    .campo {
-        border: none;
-    }
-
-    .proveedor-nombre {
-        border: none;
-    }
-
-    table {
+    .logo-ministerio {
         font-size: 10px;
     }
 
-    th,
-    td {
+    .logo-neuquen {
+        font-size: 8px;
+    }
+
+    .logo-neuquen strong {
+        font-size: 23px;
+    }
+
+    .titulo-seccion {
+        padding: 10px 12px 8px;
+    }
+
+    .titulo-seccion h1 {
+        font-size: 17px;
+        margin-bottom: 12px;
+    }
+
+    .datos-expediente {
+        gap: 6px;
+    }
+
+    .dato {
+        gap: 2px;
+    }
+
+    .dato label {
+        font-size: 8px;
+    }
+
+    .dato input {
+        font-size: 9px;
+        padding: 2px;
+    }
+
+    .barra-herramientas {
+        display: none !important;
+    }
+
+    .tabla-wrapper {
+        padding: 0;
+        overflow: visible;
+        width: 100%;
+    }
+
+    #tablaComparativa {
+        width: 100%;
+        min-width: 0;
+        table-layout: fixed;
+        font-size: 8px;
+    }
+
+    #tablaComparativa th,
+    #tablaComparativa td {
+        padding: 3px 2px;
+        word-wrap: break-word;
+    }
+
+    .proveedor-header {
+        min-width: 0;
+    }
+
+    .proveedor-nombre {
+        width: 100%;
+        font-size: 8px;
+    }
+
+    .subheader {
+        min-width: 0;
+        font-size: 7px;
+    }
+
+    .col-reng {
+        width: 8%;
+        min-width: 0;
+    }
+
+    .col-descripcion {
+        width: 22%;
+        min-width: 0;
+    }
+
+    .col-cantidad {
+        width: 8%;
+        min-width: 0;
+    }
+
+    .campo {
+        font-size: 8px;
+    }
+
+    .resultados-renglones {
+        margin: 8px 0 0;
+    }
+
+    .resultado-renglones-titulo {
         padding: 4px;
+        font-size: 8px;
+    }
+
+    .tabla-resultados {
+        font-size: 8px;
+    }
+
+    .tabla-resultados th,
+    .tabla-resultados td {
+        padding: 3px;
     }
 
     .resumen {
-        margin: 15px 0;
+        margin: 8px 0;
+    }
+
+    .resumen-titulo {
+        padding: 4px;
+        font-size: 8px;
+    }
+
+    .resultado-general {
+        padding: 6px;
+        font-size: 9px;
     }
 
     .pie-documento {
-        margin: 15px 0 0;
-    }
-
-    .descripcion-general {
-        margin-top: 10px;
-    }
-
-    .descripcion-general textarea {
-        border: none;
-        resize: none;
-        padding: 0;
+        margin: 8px 0 0;
+        padding-top: 5px;
+        font-size: 7px;
     }
 }
