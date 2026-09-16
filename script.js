@@ -62,21 +62,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =====================================================
-   RENDERIZAR TABLA COMPLETA
+   RENDERIZAR TABLA
 ===================================================== */
 
 function renderizarTabla() {
 
     renderizarCabecera();
-
     renderizarRenglones();
-
     calcularResultados();
 }
 
 
 /* =====================================================
-   MOSTRAR / OCULTAR DESCRIPCIÓN
+   DESCRIPCIÓN
 ===================================================== */
 
 function alternarDescripcion() {
@@ -88,14 +86,10 @@ function alternarDescripcion() {
 
     if (boton) {
 
-        if (mostrarDescripcion) {
-
-            boton.textContent = "− Ocultar descripción";
-
-        } else {
-
-            boton.textContent = "＋ Agregar descripción";
-        }
+        boton.textContent =
+            mostrarDescripcion
+            ? "− Ocultar descripción"
+            : "＋ Agregar descripción";
     }
 
     renderizarTabla();
@@ -114,9 +108,7 @@ function renderizarCabecera() {
     const filaSubcolumnas =
         document.getElementById("filaSubcolumnas");
 
-
     filaProveedores.innerHTML = "";
-
     filaSubcolumnas.innerHTML = "";
 
 
@@ -170,7 +162,6 @@ function renderizarCabecera() {
             document.createElement("th");
 
         th.colSpan = 2;
-
         th.className = "proveedor-header";
 
         th.innerHTML = `
@@ -220,11 +211,15 @@ function renderizarCabecera() {
         const subUnitario =
             document.createElement("th");
 
-        subUnitario.className = "subheader";
+        subUnitario.className =
+            "subheader subheader-unitario";
 
-        subUnitario.textContent = "UNITARIO";
+        subUnitario.textContent =
+            "UNITARIO";
 
-        filaSubcolumnas.appendChild(subUnitario);
+        filaSubcolumnas.appendChild(
+            subUnitario
+        );
 
 
         /* TOTAL */
@@ -232,14 +227,29 @@ function renderizarCabecera() {
         const subTotal =
             document.createElement("th");
 
-        subTotal.className = "subheader";
+        subTotal.className =
+            "subheader subheader-total";
 
-        subTotal.textContent = "TOTAL";
+        subTotal.textContent =
+            "TOTAL";
 
-        filaSubcolumnas.appendChild(subTotal);
+        filaSubcolumnas.appendChild(
+            subTotal
+        );
 
     });
 
+
+    /* COLUMNA DE ACCIONES */
+
+    filaProveedores.insertAdjacentHTML(
+        "beforeend",
+        `
+        <th rowspan="2" class="col-acciones no-print">
+            +
+        </th>
+        `
+    );
 }
 
 
@@ -330,6 +340,7 @@ function renderizarRenglones() {
 
             html += `
                 <td
+                    class="celda-precio"
                     id="unitario-${renglon.id}-${proveedor.id}"
                 >
 
@@ -351,6 +362,7 @@ function renderizarRenglones() {
 
             html += `
                 <td
+                    class="celda-precio"
                     id="total-${renglon.id}-${proveedor.id}"
                 >
                     ${
@@ -401,21 +413,6 @@ function renderizarRenglones() {
 
         cuerpo.appendChild(tr);
     });
-
-
-    /* Agregar encabezado de acciones al final */
-
-    const filaProveedores =
-        document.getElementById("filaProveedores");
-
-    filaProveedores.insertAdjacentHTML(
-        "beforeend",
-        `
-        <th rowspan="2" class="col-acciones no-print">
-            +
-        </th>
-        `
-    );
 }
 
 
@@ -444,23 +441,31 @@ function eliminarProveedor(id) {
 
     if (proveedores.length <= 2) {
 
-        alert("Debe existir al menos dos proveedores.");
+        alert(
+            "Debe existir al menos dos proveedores."
+        );
 
         return;
     }
 
 
     const proveedor =
-        proveedores.find(p => p.id === id);
+        proveedores.find(
+            p => p.id === id
+        );
 
 
-    if (!confirm(`¿Eliminar ${proveedor.nombre}?`)) {
+    if (!confirm(
+        `¿Eliminar ${proveedor.nombre}?`
+    )) {
         return;
     }
 
 
     proveedores =
-        proveedores.filter(p => p.id !== id);
+        proveedores.filter(
+            p => p.id !== id
+        );
 
 
     renglones.forEach(renglon => {
@@ -475,13 +480,18 @@ function eliminarProveedor(id) {
 
 
 /* =====================================================
-   CAMBIAR NOMBRE PROVEEDOR
+   CAMBIAR NOMBRE
 ===================================================== */
 
-function cambiarNombreProveedor(id, nombre) {
+function cambiarNombreProveedor(
+    id,
+    nombre
+) {
 
     const proveedor =
-        proveedores.find(p => p.id === id);
+        proveedores.find(
+            p => p.id === id
+        );
 
 
     if (proveedor) {
@@ -550,7 +560,9 @@ function eliminarRenglon(id) {
 
     if (renglones.length <= 1) {
 
-        alert("Debe existir al menos un renglón.");
+        alert(
+            "Debe existir al menos un renglón."
+        );
 
         return;
     }
@@ -558,7 +570,8 @@ function eliminarRenglon(id) {
 
     renglones =
         renglones.filter(
-            renglon => renglon.id !== id
+            renglon =>
+                renglon.id !== id
         );
 
 
@@ -570,10 +583,15 @@ function eliminarRenglon(id) {
    CAMBIAR DESCRIPCIÓN
 ===================================================== */
 
-function cambiarDescripcion(id, valor) {
+function cambiarDescripcion(
+    id,
+    valor
+) {
 
     const renglon =
-        renglones.find(r => r.id === id);
+        renglones.find(
+            r => r.id === id
+        );
 
 
     if (renglon) {
@@ -587,10 +605,15 @@ function cambiarDescripcion(id, valor) {
    CAMBIAR CANTIDAD
 ===================================================== */
 
-function cambiarCantidad(id, valor) {
+function cambiarCantidad(
+    id,
+    valor
+) {
 
     const renglon =
-        renglones.find(r => r.id === id);
+        renglones.find(
+            r => r.id === id
+        );
 
 
     if (!renglon) {
@@ -629,12 +652,15 @@ function cambiarPrecio(
 
     if (valor === "") {
 
-        delete renglon.precios[proveedorId];
+        delete renglon.precios[
+            proveedorId
+        ];
 
     } else {
 
-        renglon.precios[proveedorId] =
-            Number(valor);
+        renglon.precios[
+            proveedorId
+        ] = Number(valor);
     }
 
 
@@ -653,7 +679,9 @@ function calcularResultados() {
 
     proveedores.forEach(proveedor => {
 
-        totalesProveedores[proveedor.id] = 0;
+        totalesProveedores[
+            proveedor.id
+        ] = 0;
 
     });
 
@@ -663,15 +691,12 @@ function calcularResultados() {
 
     renglones.forEach(renglon => {
 
-        /* Limpiar ganador anterior */
-
         proveedores.forEach(proveedor => {
 
             const unitario =
                 document.getElementById(
                     `unitario-${renglon.id}-${proveedor.id}`
                 );
-
 
             const total =
                 document.getElementById(
@@ -703,7 +728,9 @@ function calcularResultados() {
         proveedores.forEach(proveedor => {
 
             const precio =
-                renglon.precios[proveedor.id];
+                renglon.precios[
+                    proveedor.id
+                ];
 
 
             if (
@@ -714,7 +741,9 @@ function calcularResultados() {
 
                 const total =
                     Number(precio) *
-                    Number(renglon.cantidad || 0);
+                    Number(
+                        renglon.cantidad || 0
+                    );
 
 
                 ofertas.push({
@@ -754,12 +783,11 @@ function calcularResultados() {
         }
 
 
-        /* MENOR PRECIO */
-
         const menor =
             Math.min(
                 ...ofertas.map(
-                    oferta => oferta.total
+                    oferta =>
+                        oferta.total
                 )
             );
 
@@ -770,8 +798,6 @@ function calcularResultados() {
                     oferta.total === menor
             );
 
-
-        /* UN SOLO GANADOR */
 
         if (ganadores.length === 1) {
 
@@ -819,12 +845,7 @@ function calcularResultados() {
 
             });
 
-        }
-
-
-        /* EMPATE */
-
-        else {
+        } else {
 
             ganadores.forEach(ganador => {
 
@@ -862,8 +883,10 @@ function calcularResultados() {
 
                 renglon: renglon,
 
-                ganador: ganadores
-                    .map(g => g.proveedor),
+                ganador:
+                    ganadores.map(
+                        g => g.proveedor
+                    ),
 
                 precio: menor,
 
@@ -884,11 +907,6 @@ function calcularResultados() {
     renderizarResultadosRenglones(
         resultadosPorRenglon
     );
-
-
-    calcularPropuestaConveniente(
-        totalesProveedores
-    );
 }
 
 
@@ -906,83 +924,83 @@ function renderizarResultadosRenglones(
         );
 
 
-    if (!cuerpo) {
-        return;
-    }
-
-
     cuerpo.innerHTML = "";
 
 
-    resultados.forEach((resultado, indice) => {
+    resultados.forEach(
+        (resultado, indice) => {
 
-        const tr =
-            document.createElement("tr");
-
-
-        let proveedorTexto = "—";
+            const tr =
+                document.createElement("tr");
 
 
-        if (resultado.ganador) {
+            let proveedorTexto = "—";
 
-            if (resultado.empate) {
 
-                proveedorTexto =
-                    resultado.ganador
-                        .map(
-                            proveedor =>
-                                escaparHTML(
-                                    proveedor.nombre
-                                )
-                        )
-                        .join(" / ");
+            if (resultado.ganador) {
 
-            } else {
+                if (resultado.empate) {
 
-                proveedorTexto =
-                    escaparHTML(
-                        resultado.ganador.nombre
+                    proveedorTexto =
+                        resultado.ganador
+                            .map(
+                                proveedor =>
+                                    escaparHTML(
+                                        proveedor.nombre
+                                    )
+                            )
+                            .join(" / ");
+
+                } else {
+
+                    proveedorTexto =
+                        escaparHTML(
+                            resultado.ganador.nombre
+                        );
+                }
+            }
+
+
+            let precioTexto = "—";
+
+
+            if (
+                resultado.precio !== null
+            ) {
+
+                precioTexto =
+                    formatearMoneda(
+                        resultado.precio
                     );
             }
+
+
+            tr.innerHTML = `
+
+                <td>
+                    ${indice + 1}
+                </td>
+
+                <td class="resultado-proveedor">
+                    ${proveedorTexto}
+                </td>
+
+                <td class="resultado-precio">
+                    ${precioTexto}
+                </td>
+
+            `;
+
+
+            cuerpo.appendChild(tr);
+
         }
-
-
-        let precioTexto = "—";
-
-
-        if (resultado.precio !== null) {
-
-            precioTexto =
-                formatearMoneda(
-                    resultado.precio
-                );
-        }
-
-
-        tr.innerHTML = `
-
-            <td>
-                ${indice + 1}
-            </td>
-
-            <td class="resultado-proveedor">
-                ${proveedorTexto}
-            </td>
-
-            <td class="resultado-precio">
-                ${precioTexto}
-            </td>
-
-        `;
-
-
-        cuerpo.appendChild(tr);
-    });
+    );
 }
 
 
 /* =====================================================
-   TOTALES POR PROVEEDOR
+   TOTALES
 ===================================================== */
 
 function renderizarTotales(
@@ -1038,124 +1056,18 @@ function renderizarTotales(
             </td>
 
         `;
+
     });
 
 
     tr.innerHTML += `
 
-        <td
-            class="no-print">
-        </td>
+        <td class="no-print"></td>
 
     `;
 
 
     pie.appendChild(tr);
-}
-
-
-/* =====================================================
-   PROPUESTA CONVENIENTE GENERAL
-===================================================== */
-
-function calcularPropuestaConveniente(
-    totalesProveedores
-) {
-
-    const resultado =
-        document.getElementById(
-            "resultadoGeneral"
-        );
-
-
-    if (!resultado) {
-        return;
-    }
-
-
-    let proveedoresConTotal =
-        proveedores
-            .map(proveedor => ({
-
-                proveedor: proveedor,
-
-                total:
-                    totalesProveedores[
-                        proveedor.id
-                    ] || 0
-
-            }))
-            .filter(
-                item => item.total > 0
-            );
-
-
-    if (proveedoresConTotal.length === 0) {
-
-        resultado.textContent =
-            "Complete los precios para obtener el resultado.";
-
-        return;
-    }
-
-
-    const menor =
-        Math.min(
-            ...proveedoresConTotal.map(
-                item => item.total
-            )
-        );
-
-
-    const ganadores =
-        proveedoresConTotal.filter(
-            item =>
-                item.total === menor
-        );
-
-
-    if (ganadores.length === 1) {
-
-        resultado.innerHTML = `
-
-            <strong>
-                ${escaparHTML(
-                    ganadores[0]
-                        .proveedor
-                        .nombre
-                )}
-            </strong>
-
-            —
-
-            ${formatearMoneda(
-                ganadores[0].total
-            )}
-
-        `;
-
-    } else {
-
-        resultado.innerHTML = `
-
-            <strong>EMPATE</strong>
-
-            —
-
-            ${ganadores
-                .map(item =>
-                    escaparHTML(
-                        item.proveedor.nombre
-                    )
-                )
-                .join(" / ")}
-
-            —
-
-            ${formatearMoneda(menor)}
-
-        `;
-    }
 }
 
 
@@ -1203,7 +1115,7 @@ function imprimirDocumento() {
 
 
 /* =====================================================
-   DESCARGAR PDF
+   PDF
 ===================================================== */
 
 function descargarPDF() {
