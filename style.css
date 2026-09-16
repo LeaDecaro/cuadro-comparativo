@@ -117,7 +117,7 @@ body {
 
 
 /* =====================================================
-   BARRA DE HERRAMIENTAS
+   BOTONES
 ===================================================== */
 
 .barra-herramientas {
@@ -170,8 +170,13 @@ body {
 
 #tablaComparativa {
     border-collapse: collapse;
+
+    /* IMPORTANTE:
+       no obliga a ocupar toda la pantalla */
     width: max-content;
-    min-width: 100%;
+
+    min-width: 0;
+
     font-size: 12px;
 }
 
@@ -179,22 +184,19 @@ body {
 #tablaComparativa td {
     border: 1px solid #111;
     padding: 5px;
+
     text-align: center;
     vertical-align: middle;
 }
 
 
 /* =====================================================
-   CABECERAS
+   CABECERA DE PROVEEDORES
 ===================================================== */
 
-#tablaComparativa thead th {
-    background: #f4f4f4;
-    font-weight: bold;
-}
-
 .proveedor-header {
-    min-width: 150px;
+    min-width: 0;
+    width: 190px;
     position: relative;
     background: #f4f4f4;
 }
@@ -207,11 +209,14 @@ body {
 }
 
 .proveedor-nombre {
-    width: 105px;
+    width: 125px;
+
     border: none;
     background: transparent;
+
     font-weight: bold;
     font-size: 12px;
+
     text-align: center;
     outline: none;
 }
@@ -221,14 +226,37 @@ body {
     border: 1px solid #777;
 }
 
+
+/* =====================================================
+   UNITARIO / TOTAL
+===================================================== */
+
 .subheader {
-    min-width: 75px;
+    width: auto;
+    min-width: 0;
+
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+
     font-size: 10px;
+
+    text-align: center;
+    white-space: nowrap;
+}
+
+.subheader-unitario {
+    width: 70px;
+    min-width: 70px;
+}
+
+.subheader-total {
+    width: 55px;
+    min-width: 55px;
 }
 
 
 /* =====================================================
-   COLUMNAS
+   COLUMNAS FIJAS
 ===================================================== */
 
 .col-reng {
@@ -253,16 +281,30 @@ body {
 
 
 /* =====================================================
+   CELDAS DE PRECIOS
+===================================================== */
+
+.celda-precio {
+    text-align: center !important;
+    white-space: nowrap;
+}
+
+
+/* =====================================================
    CAMPOS
 ===================================================== */
 
 .campo {
     width: 100%;
+
     border: none;
     outline: none;
     background: transparent;
+
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
+
+    text-align: center;
 }
 
 .campo:focus {
@@ -275,7 +317,7 @@ body {
 
 .cantidad-input,
 .precio-input {
-    text-align: right;
+    text-align: center;
 }
 
 
@@ -287,13 +329,18 @@ body {
     border: 1px solid #1d6fa5;
     background: white;
     color: #1d6fa5;
+
     border-radius: 50%;
+
     width: 24px;
     height: 24px;
+
     font-size: 17px;
     line-height: 17px;
+
     cursor: pointer;
     font-weight: bold;
+
     padding: 0;
 }
 
@@ -304,15 +351,17 @@ body {
 
 
 /* =====================================================
-   BOTÓN ELIMINAR
+   ELIMINAR
 ===================================================== */
 
 .btn-eliminar {
     border: none;
     background: transparent;
     color: #b91c1c;
+
     cursor: pointer;
     font-size: 16px;
+
     padding: 0;
 }
 
@@ -322,7 +371,7 @@ body {
 
 
 /* =====================================================
-   ACCIONES RENGLÓN
+   ACCIONES
 ===================================================== */
 
 .acciones-renglon {
@@ -355,6 +404,8 @@ body {
 .total-proveedor {
     font-weight: bold;
     background: #f2f2f2;
+
+    text-align: center !important;
 }
 
 
@@ -370,8 +421,10 @@ body {
 .resultado-renglones-titulo {
     background: #293f4c;
     color: white;
+
     text-align: center;
     font-weight: bold;
+
     padding: 8px;
     font-size: 12px;
 }
@@ -386,6 +439,7 @@ body {
 .tabla-resultados td {
     border: 1px solid #111;
     padding: 5px;
+
     text-align: center;
 }
 
@@ -394,38 +448,9 @@ body {
     font-weight: bold;
 }
 
-.resultado-proveedor {
-    font-weight: bold;
-}
-
+.resultado-proveedor,
 .resultado-precio {
     font-weight: bold;
-}
-
-
-/* =====================================================
-   RESUMEN GENERAL
-===================================================== */
-
-.resumen {
-    margin: 18px 35px;
-    border: 1px solid #111;
-}
-
-.resumen-titulo {
-    background: #293f4c;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    padding: 8px;
-    font-size: 12px;
-}
-
-.resultado-general {
-    padding: 12px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 14px;
 }
 
 
@@ -435,10 +460,14 @@ body {
 
 .pie-documento {
     margin: 18px 35px 0;
+
     border-top: 1px solid #333;
+
     padding-top: 10px;
+
     display: flex;
     justify-content: space-between;
+
     font-size: 10px;
     color: #444;
 }
@@ -487,8 +516,7 @@ body {
         padding: 0 8px;
     }
 
-    .resultados-renglones,
-    .resumen {
+    .resultados-renglones {
         margin-left: 15px;
         margin-right: 15px;
     }
@@ -502,6 +530,7 @@ body {
 
 /* =====================================================
    IMPRESIÓN
+   NO MODIFICAMOS LA CONFIGURACIÓN DEL PDF
 ===================================================== */
 
 @media print {
@@ -645,20 +674,6 @@ body {
     .tabla-resultados th,
     .tabla-resultados td {
         padding: 3px;
-    }
-
-    .resumen {
-        margin: 8px 0;
-    }
-
-    .resumen-titulo {
-        padding: 4px;
-        font-size: 8px;
-    }
-
-    .resultado-general {
-        padding: 6px;
-        font-size: 9px;
     }
 
     .pie-documento {
