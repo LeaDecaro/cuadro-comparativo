@@ -1,1 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Cuadro Comparativo de Ofertas</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Librería para generar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+
+    <div id="documento">
+
+        <!-- ENCABEZADO -->
+        <header class="encabezado">
+
+            <div class="logos">
+                <div class="logo-ministerio">
+                    Ministerio de Juventud,<br>
+                    Deportes y Cultura
+                </div>
+
+                <div class="logo-neuquen">
+                    Provincia del<br>
+                    <strong>neuquén</strong>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- TITULO -->
+        <section class="titulo-seccion">
+
+            <h1>CUADRO COMPARATIVO DE OFERTAS</h1>
+
+            <div class="datos-expediente">
+
+                <div class="dato">
+                    <label>FECHA:</label>
+                    <input type="date" id="fecha">
+                </div>
+
+                <div class="dato">
+                    <label>EXPEDIENTE:</label>
+                    <input
+                        type="text"
+                        id="expediente"
+                        placeholder="EX-2026-XXXXXXXX-NEU-LYT#MJDC">
+                </div>
+
+                <div class="dato">
+                    <label>REF:</label>
+                    <input
+                        type="text"
+                        id="referencia"
+                        placeholder="PS Nº XXXXX - DESCRIPCIÓN">
+                </div>
+
+                <div class="dato">
+                    <label>DESTINO:</label>
+                    <input
+                        type="text"
+                        id="destino"
+                        placeholder="Destino">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- BOTONES -->
+        <div class="barra-herramientas no-print">
+
+            <button class="btn btn-agregar" onclick="agregarRenglon()">
+                ＋ Agregar renglón
+            </button>
+
+            <button class="btn btn-agregar" onclick="agregarProveedor()">
+                ＋ Agregar proveedor
+            </button>
+
+            <button class="btn btn-imprimir" onclick="imprimirDocumento()">
+                🖨 Imprimir
+            </button>
+
+            <button class="btn btn-pdf" onclick="descargarPDF()">
+                📄 Descargar PDF
+            </button>
+
+        </div>
+
+
+        <!-- TABLA -->
+        <div class="tabla-wrapper">
+
+            <table id="tablaComparativa">
+
+                <thead>
+
+                    <!-- FILA DE PROVEEDORES -->
+                    <tr id="filaProveedores">
+
+                        <th rowspan="2" class="col-reng">
+                            RENG.
+                        </th>
+
+                        <th rowspan="2" class="col-descripcion">
+                            DESCRIPCIÓN
+                        </th>
+
+                        <th rowspan="2" class="col-cantidad">
+                            CANT.
+                        </th>
+
+                        <!-- PROVEEDORES SE GENERAN CON JAVASCRIPT -->
+
+                        <th rowspan="2" class="col-ganador">
+                            PROVEEDOR<br>CONVENIENTE
+                        </th>
+
+                        <th rowspan="2" class="col-total-conveniente">
+                            TOTAL<br>CONVENIENTE
+                        </th>
+
+                        <th rowspan="2" class="col-acciones no-print">
+                            +
+                        </th>
+
+                    </tr>
+
+
+                    <!-- SUBCOLUMNAS -->
+                    <tr id="filaSubcolumnas">
+                    </tr>
+
+                </thead>
+
+
+                <!-- RENGLONES -->
+                <tbody id="cuerpoTabla">
+                </tbody>
+
+
+                <!-- TOTALES -->
+                <tfoot id="pieTabla">
+                </tfoot>
+
+            </table>
+
+        </div>
+
+
+        <!-- RESUMEN -->
+        <section class="resumen">
+
+            <div class="resumen-titulo">
+                PROPUESTA CONVENIENTE
+            </div>
+
+            <div id="resultadoGeneral" class="resultado-general">
+                Complete los precios para obtener el resultado.
+            </div>
+
+        </section>
+
+
+        <!-- PIE -->
+        <footer class="pie-documento">
+
+            <div>
+                CUADRO COMPARATIVO DE OFERTAS
+            </div>
+
+            <div>
+                Dirección de Compras y Contrataciones
+            </div>
+
+        </footer>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
